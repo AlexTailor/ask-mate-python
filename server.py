@@ -1,11 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for
 
+import connection
+
 app = Flask(__name__)
 
 
 @app.route('/list')
 def list_questions():
-    return render_template('list.html')
+    questions = connection.get_csv_data()
+    return render_template('list.html', questions=questions)
 
 
 if __name__ == '__main__':
