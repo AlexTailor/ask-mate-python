@@ -14,6 +14,11 @@ def list_questions():
     questions = connection.get_csv_data()
     return render_template('list.html', questions=questions)
 
+@app.route('/question/<question_id>')
+def display_a_question():
+    return render_template('index.html')
+
+
 
 if __name__ == '__main__':
     app.run(
