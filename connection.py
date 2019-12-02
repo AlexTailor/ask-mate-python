@@ -14,6 +14,6 @@ def get_csv_data():
         reader = csv.DictReader(csvfile)
         for row in reader:
             question = dict(row)
-            questions.append(question)
+            questions.insert(0, question)
     return questions
 
