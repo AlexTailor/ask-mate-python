@@ -2,6 +2,7 @@
 
 {% block content %}
 <h1>All Questions</h1>
+    <button><a href="/add-question">Add New Question</a></button>
     <table>
         <tr>
             <th>Id</th>
@@ -13,7 +14,7 @@
             <th>Image</th>
         </tr>
         {% for question in questions %}
-            <tr>
+        <tr>
                 <td><a href="{{ url_for('display_a_question', question_id=question.id) }}">{{ question.id }}</a></td>
                 <td>{{ question.submission_time }}</td>
                 <td>{{ question.view_number }}</td>
