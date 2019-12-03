@@ -20,12 +20,10 @@ def list_questions():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id=int):
     items_with_id = []
-    question = connection.get_csv_data('sample_data/question.csv')
     answers = connection.get_csv_data('sample_data/answer.csv')
     for i in answers:
         if i['question_id'] == question_id:
             items_with_id.append(i)
-    print(items_with_id)
     return render_template('question.html', answers=items_with_id)
 
 
