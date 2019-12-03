@@ -4,7 +4,7 @@ import connection
 
 
 def sort_by_date():
-    questions = connection.get_csv_data()
+    questions = connection.get_csv_data('sample_data/question.csv')
     sorted_questions = sorted(questions, key=itemgetter('submission_time'), reverse=True)
     return sorted_questions
 

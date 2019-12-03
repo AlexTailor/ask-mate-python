@@ -19,8 +19,8 @@ def list_questions():
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id=int):
-    question = connection.get_csv_data(question_id)
-    answers = connection.get_csv_data2(question_id)
+    question = connection.get_csv_data('sample_data/question.csv', question_id)
+    answers = connection.get_csv_data('sample_data/answer.csv', question_id)
     print(answers)
     return render_template('question.html', id = question["id"] , question_title = question["title"],
                            answer = answers["message"])
