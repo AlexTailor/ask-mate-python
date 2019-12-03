@@ -1,4 +1,5 @@
 from datetime import datetime
+import time
 from operator import itemgetter
 import connection
 
@@ -14,3 +15,12 @@ def convert_unix_timestamp():
     for question in questions:
         question['submission_time'] = (datetime.utcfromtimestamp(int(question['submission_time'])).strftime('%Y-%m-%d %H:%M:%S'))
     return questions
+
+
+def get_timestamp():
+    return int(time.time())
+
+
+def get_next_id():
+    all_questions = connection.get_csv_data('sample_data/question.csv')
+    return int(all_questions[-1]['id']) + 1

@@ -3,14 +3,20 @@
 # but later on we'll change this to SQL database. So in the future, we only need to change in this layer.
 
 import csv
+DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 
-def get_csv_data(file_location, question_id=None):
+
+def get_csv_data(file_location):
     datas = []
     with open(file_location, encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             data = dict(row)
             datas.append(data)
-            if question_id is not None and question_id == data['id']:
-                return data
     return datas
+
+
+def add_question_to_file(file_location, data):
+    with open(file_location, 'a', encoding='utf-8') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER)
+        writer.writerow(data)

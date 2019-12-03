@@ -2,14 +2,19 @@
 
 {% block content %}
 
+
+
 <table>
+    {% for answer in answers %}
     <tr>
-        <h3>ID</h3><br/>
-        {{id}}<br/>
-        <h3>Question</h3><br/>
-        {{question_title}}<br/>
-        <h3>Answer</h3><br/>
-        {{answer}}<br/>
+        <td>{{ answer.id}}</td>
     </tr>
+    {% endfor %}
+<!--        <h3>ID</h3><br/>-->
+<!--        {{id}}<br/>-->
+<!--        <h3>Question</h3><br/>-->
+<!--        {{question_title}}<br/>-->
+<!--        <h3>Answer</h3><br/>-->
+<!--        {{answer}}<br/>-->
 </table>
 {% endblock %}
