@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 
 import connection
+import data_manager
 
 app = Flask(__name__)
 
@@ -12,7 +13,7 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
-    questions = connection.get_csv_data()
+    questions = data_manager.convert_unix_timestamp()
     return render_template('list.html', questions=questions)
 
 

@@ -14,7 +14,7 @@ def get_csv_data(question_id=None):
         reader = csv.DictReader(csvfile)
         for row in reader:
             question = dict(row)
-            questions.insert(0, question)
+            questions.append(question)
             if question_id is not None and question_id == question['id']:
                 return question
     return questions
