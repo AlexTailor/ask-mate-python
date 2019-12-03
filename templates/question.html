@@ -2,14 +2,14 @@
 
 {% block content %}
 
-<table>
+
+<h2 align="center">{{message}}</h2>
+<table border="1|0">
+    {% for answer in answers %}
     <tr>
-        <h3>ID</h3><br/>
-        {{id}}<br/>
-        <h3>Question</h3><br/>
-        {{question_title}}<br/>
-        <h3>Answer</h3><br/>
-        {{answer}}<br/>
+        <td>{{ answer.id}}</td>
+        <td>{{ answer.message}}</td>
     </tr>
+    {% endfor %}
 </table>
 {% endblock %}
