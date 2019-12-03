@@ -6,7 +6,7 @@ import csv
 import os
 
 DATA_FILE_PATH = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'sample_data/question.csv'
-DATA_FILE_PATH2 = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'sample_data/answers.csv'
+DATA_FILE_PATH2 = os.getenv('DATA_FILE_PATH') if 'DATA_FILE_PATH' in os.environ else 'sample_data/answer.csv'
 
 def get_csv_data(question_id=None):
     questions = []
@@ -19,7 +19,7 @@ def get_csv_data(question_id=None):
                 return question
     return questions
 
-def get_csv_data(question_id=None):
+def get_csv_data2(question_id=None):
     answers = []
     with open(DATA_FILE_PATH2, encoding='utf-8') as csvfile:
         reader = csv.DictReader(csvfile)
