@@ -2,8 +2,14 @@
 
 {% block content %}
 
-{{id}}<br/>
-{{question_title}}<br/>
-{{answer}}<br/>
-
+<table>
+    <tr>
+        <h2>ID</h2><br/>
+        {{id}}<br/>
+        <h2>Question</h2><br/>
+        {{question_title}}<br/>
+        <h2>Answer</h2><br/>
+        {{answer}}<br/>
+    </tr>
+</table>
 {% endblock %}
