@@ -9,15 +9,22 @@ app = Flask(__name__)
 def route_index():
     return render_template('index.html')
 
+
 @app.route('/list')
 def list_questions():
     questions = connection.get_csv_data()
     return render_template('list.html', questions=questions)
 
+
 @app.route('/question/<question_id>')
-def display_a_question():
+def display_a_question(question_id):
     return render_template('index.html')
 
+
+@app.route('/question/<question_id>')
+def get_question(question_id=int):
+    question = connection.get_csv_data(question_id)
+    return render_template('question.html')
 
 
 if __name__ == '__main__':

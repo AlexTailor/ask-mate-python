@@ -1,13 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stackoverflow</title>
-</head>
-<body style="background-color:lightskyblue;">
+{% extends "layout.html" %}
+
+{% block content %}
+<picture>
+    <img src="/static/askmate.png" alt="AskMate" align="center" style="width:500px;">
+</picture>
 <h1 align="center">Welcome in our first Q&A site</h1>
 <form method="get" action="/list" align="center">
     <button type="submit">All question</button>
 </form>
-</body>
-</html>
+
+{% endblock %}
+
