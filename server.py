@@ -20,7 +20,9 @@ def list_questions():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id=int):
     question = connection.get_csv_data(question_id)
-    return render_template('question.html')
+    return render_template('question.html', id = question["id"] , submission_time = question["submission_time"],
+                           view_number = question["view_number"], vote_number = question["vote_number"] ,
+                           question_title = question["title"], message = question["message"], image = question["image"])
 
 
 if __name__ == '__main__':
