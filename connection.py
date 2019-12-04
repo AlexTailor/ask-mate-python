@@ -27,3 +27,12 @@ def new_answer_to_file(file_location, data):
     with open(file_location, 'a', encoding='utf-8') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=DATA_HEADER2)
         writer.writerow(data)
+
+
+def write_to_file(file_location, data):
+    with open(file_location, "w") as csv_file:
+        writer = csv.DictWriter(csv_file, fieldnames=DATA_HEADER)
+        writer.writeheader()
+        for row in data:
+            writer.writerow(row)
+

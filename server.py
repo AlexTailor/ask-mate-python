@@ -29,7 +29,7 @@ def display_a_question(question_id=int):
     for dictionary in questions:
         if dictionary['id'] == question_id:
            message = dictionary['message']
-    return render_template('question.html',question_id=question_id, answers=items_with_id,message=message )
+    return render_template('question.html', question_id=question_id, answers=items_with_id,message=message )
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -62,6 +62,15 @@ def new_answer(question_id=int):
         connection.new_answer_to_file('sample_data/answer.csv', answer)
         return redirect('/list')
     return render_template('new-answer.html')
+
+@app.route('/question/<question_id>/delete')
+def delete_question(question_id=int):
+    questions = connection.get_csv_data('sample_data/question.csv')
+    for question in questions:
+        if question['id'] == question_id:
+            questions.remove(question)
+        connection.write_to_file('sample_data/question.csv', questions)
+    return redirect('/list')
 
 
 if __name__ == '__main__':
