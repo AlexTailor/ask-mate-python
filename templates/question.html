@@ -4,12 +4,14 @@
 
 
 <h2 align="center">{{message}}</h2>
-<table border="1|0">
-    {% for answer in answers %}
-    <tr>
-        <td>{{ answer.id}}</td>
-        <td>{{ answer.message}}</td>
-    </tr>
-    {% endfor %}
-</table>
+<center>
+    <table>
+        {% for answer in answers %}
+        <tr>
+            <td><strong>{{ answer.id}}</strong></td>
+            <td>{{ answer.message}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</center>
 {% endblock %}
