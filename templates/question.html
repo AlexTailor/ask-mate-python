@@ -9,12 +9,16 @@
         {% for answer in answers %}
         <tr>
             <td><strong>{{ answer.id}}</strong></td>
-            <td>{{ answer.message}}</td>
+
+            <td>{{ answer.message}} <form method="get" action='/answer/{{ answer.id }}/delete'>
+                <p><button type="submit">Delete answer</button></p>
+            </form></td>
 
         </tr>
+
         {% endfor %}
     <form method="get" action = "/question/{{ question_id }}/new-answer">
-        <button type="submit">Write question</button>
+        <button type="submit">Write answer</button>
 
     </form>
     <form method="get" action="/question/{{ question_id }}/delete">

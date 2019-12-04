@@ -4,7 +4,8 @@ import connection
 import data_manager
 
 app = Flask(__name__)
-
+DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
+DATA_HEADER2 = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
@@ -29,7 +30,7 @@ def display_a_question(question_id=int):
     for dictionary in questions:
         if dictionary['id'] == question_id:
            message = dictionary['message']
-    return render_template('question.html', question_id=question_id, answers=items_with_id,message=message )
+    return render_template('question.html', question_id=question_id, answers=items_with_id, message=message )
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -69,8 +70,18 @@ def delete_question(question_id=int):
     for question in questions:
         if question['id'] == question_id:
             questions.remove(question)
-        connection.write_to_file('sample_data/question.csv', questions)
+        connection.write_to_file('sample_data/question.csv', DATA_HEADER, questions)
     return redirect('/list')
+
+@app.route('/answer/<answer_id>/delete')
+def delete_answer(answer_id=int):
+    answers = connection.get_csv_data('sample_data/answer.csv')
+    for answer in answers:
+        if answer['id'] == answer_id:
+            answers.remove(answer)
+        connection.write_to_file('sample_data/answer.csv', DATA_HEADER2, answers)
+    return redirect('/list')
+
 
 
 if __name__ == '__main__':

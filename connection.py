@@ -29,9 +29,9 @@ def new_answer_to_file(file_location, data):
         writer.writerow(data)
 
 
-def write_to_file(file_location, data):
+def write_to_file(file_location, header,data):
     with open(file_location, "w") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=DATA_HEADER)
+        writer = csv.DictWriter(csv_file, fieldnames=header)
         writer.writeheader()
         for row in data:
             writer.writerow(row)
