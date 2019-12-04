@@ -21,6 +21,6 @@ def get_timestamp():
     return int(time.time())
 
 
-def get_next_id():
-    all_questions = connection.get_csv_data('sample_data/question.csv')
-    return int(all_questions[-1]['id']) + 1
+def get_next_id(file_name):
+    data = connection.get_csv_data(file_name)
+    return int(data[-1]['id']) + 1

@@ -10,8 +10,13 @@
         <tr>
             <td><strong>{{ answer.id}}</strong></td>
             <td>{{ answer.message}}</td>
+
         </tr>
         {% endfor %}
+    <form method="get" action = "/question/{{ question_id }}/new-answer">
+        <button type="submit">Write question</button>
+
+    </form>
     </table>
 </center>
 {% endblock %}
