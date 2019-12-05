@@ -76,11 +76,15 @@ def delete_question(question_id=int):
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id=int):
     answers = connection.get_csv_data('sample_data/answer.csv')
+    question_id = None
     for answer in answers:
         if answer['id'] == answer_id:
+            question_id = answer["question_id"]
             answers.remove(answer)
         connection.write_to_file('sample_data/answer.csv', DATA_HEADER2, answers)
-    return redirect('/list')
+
+    return redirect(url_for("display_a_question",question_id=question_id))
+    # return render_template('question.html', question_id=question_id)
 
 
 
