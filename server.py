@@ -7,6 +7,7 @@ app = Flask(__name__)
 DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
 DATA_HEADER2 = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
+
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
     return render_template('index.html')
@@ -29,8 +30,8 @@ def display_a_question(question_id=int):
             items_with_id.append(dictionary)
     for dictionary in questions:
         if dictionary['id'] == question_id:
-           message = dictionary['message']
-    return render_template('question.html', question_id=question_id, answers=items_with_id, message=message )
+            message = dictionary['message']
+    return render_template('question.html', question_id=question_id, answers=items_with_id, message=message)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -49,7 +50,8 @@ def add_new_question():
         return redirect('/list')
     return render_template('add-question.html')
 
-@app.route('/question/<question_id>/new-answer', methods= ['GET', 'POST'])
+
+@app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def new_answer(question_id=int):
     if request.method == 'POST':
         answer = {
@@ -61,8 +63,9 @@ def new_answer(question_id=int):
             'image': '-'
         }
         connection.new_answer_to_file('sample_data/answer.csv', answer)
-        return redirect('/list')
+        return redirect(url_for("display_a_question", question_id=question_id))
     return render_template('new-answer.html')
+
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=int):
@@ -72,6 +75,7 @@ def delete_question(question_id=int):
             questions.remove(question)
         connection.write_to_file('sample_data/question.csv', DATA_HEADER, questions)
     return redirect('/list')
+
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id=int):
@@ -83,9 +87,7 @@ def delete_answer(answer_id=int):
             answers.remove(answer)
         connection.write_to_file('sample_data/answer.csv', DATA_HEADER2, answers)
 
-    return redirect(url_for("display_a_question",question_id=question_id))
-    # return render_template('question.html', question_id=question_id)
-
+    return redirect(url_for("display_a_question", question_id=question_id))
 
 
 if __name__ == '__main__':
