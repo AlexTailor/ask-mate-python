@@ -46,7 +46,7 @@ def add_new_question():
             'message': request.form.get('message'),
             'image': '-'
         }
-        connection.add_question_to_file('sample_data/question.csv', question)
+        connection.add_to_file('sample_data/question.csv', DATA_HEADER, question)
         return redirect('/list')
     return render_template('add-question.html')
 
@@ -62,7 +62,7 @@ def new_answer(question_id=int):
             'message': request.form.get('message'),
             'image': '-'
         }
-        connection.new_answer_to_file('sample_data/answer.csv', answer)
+        connection.add_to_file('sample_data/answer.csv', DATA_HEADER2, answer)
         return redirect(url_for("display_a_question", question_id=question_id))
     return render_template('new-answer.html')
 
