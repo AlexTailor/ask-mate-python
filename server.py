@@ -48,7 +48,9 @@ def add_new_question():
         }
         connection.add_to_file('sample_data/question.csv', DATA_HEADER, question)
         return redirect('/list')
-    return render_template('add-question.html')
+
+    elif request.method== 'GET':
+        return render_template('add-question.html')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
