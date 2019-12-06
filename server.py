@@ -49,7 +49,7 @@ def add_new_question():
         connection.add_to_file('sample_data/question.csv', DATA_HEADER, question)
         return redirect('/list')
 
-    elif request.method== 'GET':
+    elif request.method == 'GET':
         return render_template('add-question.html')
 
 
