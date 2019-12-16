@@ -2,13 +2,14 @@
 
 {% block content %}
 
-
-    <h2 align="center">{{ question_message }}</h2>
+    {% for question in question_message %}
+    <h2 align="center">{{ question.message }}</h2>
+    {% endfor %}
     <div style="text-align: center;">
         <table>
             {% for answer in answers %}
                 <tr>
-                    <td>{{ answer }}
+                    <td>{{ answer.message }}
                         <form method="get" action='/answer/{{ answer.id }}/delete'>
                             <p>
                                 <button type="submit">Delete answer</button>
