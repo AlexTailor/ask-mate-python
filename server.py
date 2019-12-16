@@ -15,7 +15,6 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
-    # questions = data_manager.convert_unix_timestamp()
     questions = data_manager.get_all_questions()
     print(questions)
     return render_template('list.html', questions=questions)
@@ -23,21 +22,8 @@ def list_questions():
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id):
-    # items_with_id = []
-    # message = None
-    questions = data_manager.get_all_questions()
     answers = data_manager.get_answers_for_questions()
     question = data_manager.get_single_question(question_id)
-
-    # print(questions)
-    # print(answers)
-    #
-    # for dictionary in answers:
-    #     if dictionary['question_id'] == question_id:
-    #         items_with_id.append(dictionary)
-    # for dictionary in questions:
-    #     if dictionary['id'] == question_id:
-    #         message = dictionary['message']
     return render_template('question.html', question_id=question_id, answers=answers, question_message=question)
 
 
