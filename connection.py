@@ -30,4 +30,4 @@ def write_to_file(file_location, header,data):
 
 
 def update_question(file_location, data):
-    add_question_to_file(file_location, data)
+    add_to_file(file_location, data)

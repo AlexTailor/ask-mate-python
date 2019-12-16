@@ -13,7 +13,7 @@ def route_index():
     return render_template('index.html')
 
 
-@app.route('/list', methods=['GET', 'POST'])
+@app.route('/list')
 def list_questions():
     questions = data_manager.convert_unix_timestamp()
     return render_template('list.html', questions=questions)

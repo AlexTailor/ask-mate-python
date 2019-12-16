@@ -3,29 +3,35 @@
 {% block content %}
 
 
-<h2 align="center">{{message}}</h2>
-<center>
+    <h2 align="center">{{ message }}</h2>
+    <div style="text-align: center;">
         <table>
             {% for answer in answers %}
-            <tr>
-                <td><strong>{{ answer.id}}</strong></td>
+                <tr>
+                    <td><strong>{{ answer.id }}</strong></td>
 
-                <td>{{ answer.message}} <form method="get" action='/answer/{{ answer.id }}/delete'>
-                    <p><button type="submit">Delete answer</button></p>
-                </form></td>
+                    <td>{{ answer.message }}
+                        <form method="get" action='/answer/{{ answer.id }}/delete'>
+                            <p>
+                                <button type="submit">Delete answer</button>
+                            </p>
+                        </form>
+                    </td>
 
-            </tr>
+                </tr>
 
             {% endfor %}
-            <form method="get" action = "/question/{{ question_id }}/new-answer">
+            <form method="get" action="/question/{{ question_id }}/new-answer">
                 <button type="submit">Write answer</button>
 
             </form>
             <form method="get" action="/question/{{ question_id }}/delete">
-                <p><button type="submit">Delete</button></p>
+                <p>
+                    <button type="submit">Delete</button>
+                </p>
             </form>
 
 
         </table>
-</center>
+    </div>
 {% endblock %}

@@ -13,7 +13,8 @@ def sort_by_date():
 def convert_unix_timestamp():
     questions = sort_by_date()
     for question in questions:
-        question['submission_time'] = (datetime.utcfromtimestamp(int(question['submission_time'])).strftime('%Y-%m-%d %H:%M:%S'))
+        question['submission_time'] = (
+            datetime.utcfromtimestamp(int(question['submission_time'])).strftime('%Y-%m-%d %H:%M:%S'))
     return questions
 
 
@@ -24,4 +25,3 @@ def get_timestamp():
 def get_next_id(file_name):
     data = connection.get_csv_data(file_name)
     return int(data[-1]['id']) + 1
-
