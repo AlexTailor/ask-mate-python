@@ -12,6 +12,7 @@ def sort_by_date():
     questions = connection.get_csv_data('sample_data/question.csv')
     sorted_questions = sorted(questions, key=itemgetter('submission_time'), reverse=True)
     return sorted_questions
+    # return render_template('list.html', questions=questions)
 
 
 def convert_unix_timestamp():
@@ -38,3 +39,22 @@ def get_all_questions(cursor):
     ''')
     questions = cursor.fetchall()
     return questions
+
+
+@database_common.connection_handler
+def get_all_answers(cursor):
+    cursor.execute('''
+        SELECT * FROM answer
+    ''')
+    answers = cursor.fetchall()
+    return answers
+
+
+@database_common.connection_handler
+def get_answers_for_questions(cursor):
+    cursor.execute('''
+        SELECT answer.message FROM answer
+        INNER JOIN question ON answer.question_id = question.id
+    ''')
+    answers_with_question_id = cursor.fetchall()
+    return answers_with_question_id

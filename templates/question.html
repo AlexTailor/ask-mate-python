@@ -8,9 +8,9 @@
         <table>
             {% for answer in answers %}
                 <tr>
-                    <td><strong>{{ answer.id }}</strong></td>
 
-                    <td>{{ answer.message }}
+
+                    <td>{{ answer }}
                         <form method="get" action='/answer/{{ answer.id }}/delete'>
                             <p>
                                 <button type="submit">Delete answer</button>

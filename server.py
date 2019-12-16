@@ -17,22 +17,27 @@ def route_index():
 def list_questions():
     # questions = data_manager.convert_unix_timestamp()
     questions = data_manager.get_all_questions()
+    print(questions)
     return render_template('list.html', questions=questions)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id=int):
-    items_with_id = []
-    message = None
-    questions = connection.get_csv_data('sample_data/question.csv')
-    answers = connection.get_csv_data('sample_data/answer.csv')
-    for dictionary in answers:
-        if dictionary['question_id'] == question_id:
-            items_with_id.append(dictionary)
-    for dictionary in questions:
-        if dictionary['id'] == question_id:
-            message = dictionary['message']
-    return render_template('question.html', question_id=question_id, answers=items_with_id, message=message)
+    # items_with_id = []
+    # message = None
+    questions = data_manager.get_all_questions()
+    answers = data_manager.get_answers_for_questions()
+
+    # print(questions)
+    # print(answers)
+    #
+    # for dictionary in answers:
+    #     if dictionary['question_id'] == question_id:
+    #         items_with_id.append(dictionary)
+    # for dictionary in questions:
+    #     if dictionary['id'] == question_id:
+    #         message = dictionary['message']
+    return render_template('question.html', question_id=question_id, answers=answers)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
