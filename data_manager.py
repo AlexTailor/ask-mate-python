@@ -70,3 +70,6 @@ def get_answers_for_questions(cursor):
     answers_with_question_id = cursor.fetchall()
     return answers_with_question_id
 
+
+
+# new version
