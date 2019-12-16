@@ -42,10 +42,12 @@ def get_all_answers(cursor):
 
 
 @database_common.connection_handler
-def get_answers_for_questions(cursor):
+def get_answers_for_questions(cursor, id_):
     cursor.execute('''
         SELECT answer.message FROM answer
         INNER JOIN question ON answer.question_id = question.id
-    ''')
+        WHERE question_id = %(id_)s;
+    ''',
+                   {'id_': id_})
     answers_with_question_id = cursor.fetchall()
     return answers_with_question_id

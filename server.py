@@ -22,7 +22,7 @@ def list_questions():
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id):
-    answers = data_manager.get_answers_for_questions()
+    answers = data_manager.get_answers_for_questions(question_id)
     question = data_manager.get_single_question(question_id)
     return render_template('question.html', question_id=question_id, answers=answers, question_message=question)
 
