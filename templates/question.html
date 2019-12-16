@@ -3,13 +3,11 @@
 {% block content %}
 
 
-    <h2 align="center">{{ message }}</h2>
+    <h2 align="center">{{ question_message }}</h2>
     <div style="text-align: center;">
         <table>
             {% for answer in answers %}
                 <tr>
-
-
                     <td>{{ answer }}
                         <form method="get" action='/answer/{{ answer.id }}/delete'>
                             <p>
@@ -17,7 +15,6 @@
                             </p>
                         </form>
                     </td>
-
                 </tr>
 
             {% endfor %}

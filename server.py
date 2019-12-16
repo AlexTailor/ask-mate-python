@@ -22,11 +22,12 @@ def list_questions():
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
-def display_a_question(question_id=int):
+def display_a_question(question_id):
     # items_with_id = []
     # message = None
     questions = data_manager.get_all_questions()
     answers = data_manager.get_answers_for_questions()
+    question = data_manager.get_single_question(question_id)
 
     # print(questions)
     # print(answers)
@@ -37,7 +38,7 @@ def display_a_question(question_id=int):
     # for dictionary in questions:
     #     if dictionary['id'] == question_id:
     #         message = dictionary['message']
-    return render_template('question.html', question_id=question_id, answers=answers)
+    return render_template('question.html', question_id=question_id, answers=answers, question_message=question)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])

@@ -42,6 +42,17 @@ def get_all_questions(cursor):
 
 
 @database_common.connection_handler
+def get_single_question(cursor, id_):
+    cursor.execute('''
+                    SELECT message FROM question
+                    WHERE id =%(id_)s;
+                    ''',
+                   {'id_': id_})
+    question = cursor.fetchall()
+    return question
+
+
+@database_common.connection_handler
 def get_all_answers(cursor):
     cursor.execute('''
         SELECT * FROM answer
@@ -58,3 +69,4 @@ def get_answers_for_questions(cursor):
     ''')
     answers_with_question_id = cursor.fetchall()
     return answers_with_question_id
+
