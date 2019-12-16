@@ -1,7 +1,11 @@
 from datetime import datetime
 import time
 from operator import itemgetter
+
+import psycopg2
+
 import connection
+import database_common
 
 
 def sort_by_date():
@@ -25,3 +29,12 @@ def get_timestamp():
 def get_next_id(file_name):
     data = connection.get_csv_data(file_name)
     return int(data[-1]['id']) + 1
+
+
+@database_common.connection_handler
+def get_all_questions(cursor):
+    cursor.execute('''
+        SELECT * FROM question
+    ''')
+    questions = cursor.fetchall()
+    return questions

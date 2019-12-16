@@ -15,7 +15,8 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
-    questions = data_manager.convert_unix_timestamp()
+    # questions = data_manager.convert_unix_timestamp()
+    questions = data_manager.get_all_questions()
     return render_template('list.html', questions=questions)
 
 
