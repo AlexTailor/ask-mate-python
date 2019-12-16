@@ -28,3 +28,6 @@ def write_to_file(file_location, header,data):
         for row in data:
             writer.writerow(row)
 
+
+def update_question(file_location, data):
+    add_question_to_file(file_location, data)
