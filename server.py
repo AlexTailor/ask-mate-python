@@ -18,8 +18,10 @@ def list_questions():
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id):
     answers = data_manager.get_answers_for_questions(question_id)
+    answer_id = data_manager.get_answer_id(question_id)
     question = data_manager.get_single_question(question_id)
-    return render_template('question.html', question_id=question_id, answers=answers, question_message=question)
+    return render_template('question.html', question_id=question_id, answer_id=answer_id, answers=answers,
+                           question_message=question)
 
 
 @app.route('/add-question', methods=['GET', 'POST'])
@@ -53,8 +55,9 @@ def delete_question(question_id=int):
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id=int):
-    question_id = data_manager.delete_question(answer_id)
-    return redirect(url_for("display_a_question", question_id=question_id, answer_id=answer_id))
+    question_id = data_manager.get_question_id(answer_id)
+    data_manager.delete_answer(answer_id)
+    return redirect(url_for("display_a_question", question_id=question_id))
 
 
 if __name__ == '__main__':
