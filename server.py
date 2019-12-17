@@ -1,6 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for
-
-import connection
 import data_manager
 
 app = Flask(__name__)
@@ -14,7 +12,6 @@ def route_index():
 @app.route('/list')
 def list_questions():
     questions = data_manager.get_all_questions()
-    print(questions)
     return render_template('list.html', questions=questions)
 
 
@@ -44,7 +41,6 @@ def new_answer(question_id=int):
         time = data_manager.get_timestamp()
         messages = request.form.get('message')
         data_manager.get_new_answer(time, question_id, messages)
-
         return redirect(url_for("display_a_question", question_id=question_id))
     return render_template('new-answer.html')
 
@@ -57,15 +53,8 @@ def delete_question(question_id=int):
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id=int):
-    answers = connection.get_csv_data('sample_data/answer.csv')
-    question_id = None
-    for answer in answers:
-        if answer['id'] == answer_id:
-            question_id = answer["question_id"]
-            answers.remove(answer)
-        connection.write_to_file('sample_data/answer.csv', DATA_HEADER2, answers)
-
-    return redirect(url_for("display_a_question", question_id=question_id))
+    question_id = data_manager.delete_question(answer_id)
+    return redirect(url_for("display_a_question", question_id=question_id, answer_id=answer_id))
 
 
 if __name__ == '__main__':

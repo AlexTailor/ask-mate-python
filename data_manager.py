@@ -1,15 +1,9 @@
 from datetime import datetime
-import connection
 import database_common
 
 
 def get_timestamp():
-    return (datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
-
-
-def get_next_id(file_name):
-    data = connection.get_csv_data(file_name)
-    return int(data[-1]['id']) + 1
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 @database_common.connection_handler
