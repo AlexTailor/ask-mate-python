@@ -72,3 +72,15 @@ def delete_question(cursor, id_):
         WHERE id = %(id_)s;
     ''',
                    {'id_': id_})
+
+
+@database_common.connection_handler
+def get_new_answer(cursor, time, question_id, messages):
+    cursor.execute('''
+        INSERT INTO answer   
+        (submission_time, vote_number, question_id, message)
+        VALUES (%(time)s, 0, %(question_id)s , %(messages)s);
+    ''',
+                   {'time': time,
+                    'question_id': question_id,
+                    'messages': messages})
