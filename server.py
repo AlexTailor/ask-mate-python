@@ -4,8 +4,6 @@ import connection
 import data_manager
 
 app = Flask(__name__)
-DATA_HEADER = ['id', 'submission_time', 'view_number', 'vote_number', 'title', 'message', 'image']
-DATA_HEADER2 = ['id', 'submission_time', 'vote_number', 'question_id', 'message', 'image']
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -34,15 +32,6 @@ def add_new_question():
         messages = request.form.get('message')
         time = data_manager.get_timestamp()
         data_manager.get_new_question(time, titles, messages)
-        # question = {
-        #     'submission_time': data_manager.get_timestamp(),
-        #     'view_number': 0,
-        #     'vote_number': 0,
-        #     'title': request.form.get('title'),
-        #     'message': request.form.get('message'),
-        #     'image': '-'
-        # }
-        # connection.add_to_file('sample_data/question.csv', DATA_HEADER, question)
         return redirect('/list')
 
     elif request.method == 'GET':
@@ -67,11 +56,7 @@ def new_answer(question_id=int):
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=int):
-    questions = connection.get_csv_data('sample_data/question.csv')
-    for question in questions:
-        if question['id'] == question_id:
-            questions.remove(question)
-        connection.write_to_file('sample_data/question.csv', DATA_HEADER, questions)
+    data_manager.delete_question(question_id)
     return redirect('/list')
 
 

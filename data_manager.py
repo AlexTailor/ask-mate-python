@@ -63,3 +63,12 @@ def get_new_question(cursor, time, titles, messages):
                    {'time': time,
                     'titles': titles,
                     'messages': messages})
+
+
+@database_common.connection_handler
+def delete_question(cursor, id_):
+    cursor.execute('''
+        DELETE FROM question
+        WHERE id = %(id_)s;
+    ''',
+                   {'id_': id_})
