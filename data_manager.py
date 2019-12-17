@@ -1,10 +1,10 @@
-import time
+from datetime import datetime
 import connection
 import database_common
 
 
 def get_timestamp():
-    return int(time.time())
+    return (datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
 
 def get_next_id(file_name):
@@ -51,3 +51,15 @@ def get_answers_for_questions(cursor, id_):
                    {'id_': id_})
     answers_with_question_id = cursor.fetchall()
     return answers_with_question_id
+
+
+@database_common.connection_handler
+def get_new_question(cursor, time, titles, messages):
+    cursor.execute('''
+        INSERT INTO question   
+        (submission_time, view_number, vote_number, title, message)
+        VALUES (%(time)s, 0, 0, %(titles)s , %(messages)s);
+    ''',
+                   {'time': time,
+                    'titles': titles,
+                    'messages': messages})

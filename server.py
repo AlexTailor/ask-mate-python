@@ -30,16 +30,19 @@ def display_a_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_new_question():
     if request.method == 'POST':
-        question = {
-            'id': data_manager.get_next_id('sample_data/question.csv'),
-            'submission_time': data_manager.get_timestamp(),
-            'view_number': 0,
-            'vote_number': 0,
-            'title': request.form.get('title'),
-            'message': request.form.get('message'),
-            'image': '-'
-        }
-        connection.add_to_file('sample_data/question.csv', DATA_HEADER, question)
+        titles = request.form.get('title')
+        messages = request.form.get('message')
+        time = data_manager.get_timestamp()
+        data_manager.get_new_question(time, titles, messages)
+        # question = {
+        #     'submission_time': data_manager.get_timestamp(),
+        #     'view_number': 0,
+        #     'vote_number': 0,
+        #     'title': request.form.get('title'),
+        #     'message': request.form.get('message'),
+        #     'image': '-'
+        # }
+        # connection.add_to_file('sample_data/question.csv', DATA_HEADER, question)
         return redirect('/list')
 
     elif request.method == 'GET':
