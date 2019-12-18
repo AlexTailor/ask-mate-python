@@ -29,7 +29,7 @@ def get_single_question(cursor, id_):
 @database_common.connection_handler
 def get_question_id(cursor, id_):
     cursor.execute('''
-                    SELECT question_id FROM answer
+                    SELECT answer.question_id FROM answer
                     WHERE id =%(id_)s;
                     ''',
                    {'id_': id_})
@@ -41,8 +41,8 @@ def get_question_id(cursor, id_):
 @database_common.connection_handler
 def get_answer_id(cursor, id_):
     cursor.execute('''
-                    SELECT answer.id FROM answer
-                    WHERE id =%(id_)s;
+                    SELECT id FROM answer
+                    WHERE question_id =%(id_)s;
                     ''',
                    {'id_': id_})
     answer = cursor.fetchone()
