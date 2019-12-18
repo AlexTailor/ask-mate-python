@@ -5,6 +5,9 @@
     {% for question in question_message %}
         <h2 align="center">{{ question.message }}</h2>
     {% endfor %}
+    {% for comment in comments %}
+        <p align="center">{{ comment.id }} {{ comment.message }}</p>
+    {% endfor %}
     <div style="text-align: center;">
         <table>
             {% for answer in answers %}

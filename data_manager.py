@@ -34,7 +34,6 @@ def get_question_id(cursor, id_):
                     ''',
                    {'id_': id_})
     question = cursor.fetchone()
-    print(question)
     return question['question_id']
 
 
@@ -46,7 +45,6 @@ def get_answer_id(cursor, id_):
                     ''',
                    {'id_': id_})
     answer = cursor.fetchall()
-    print(answer)
     return answer
 
 
@@ -102,3 +100,14 @@ def delete_answer(cursor, id_):
         WHERE id = %(id_)s;
     ''',
                    {'id_': id_})
+
+
+@database_common.connection_handler
+def get_all_comment(cursor, id_):
+    cursor.execute("""
+        SELECT * FROM comment
+        WHERE question_id = %(id_)s     
+    """,
+                   {'id_': id_})
+    comments = cursor.fetchall()
+    return comments
