@@ -18,22 +18,22 @@
         <table>
             {% for answer in answers %}
                 <tr>
-                <td>{{ answer.message }}
-                    <form method="get" action='/answer/{{ answer.id }}/delete'>
+                <td>{{ answer['message'] }}
+                    <form method="get" action='/answer/{{ answer['id'] }}/delete'>
                         <button type="submit">Delete answer</button>
                     </form>
-                    <form method="get" action="/answer/{{ answer.id }}/new-comment">
+                    <form method="get" action="/answer/{{ answer['id'] }}/new-comment">
                         <button type="submit">Write answer comment</button>
                     </form>
                 </td>
                 <td>
                     {% for answercomment in answercomments %}
-                        {% if answercomment.answer_id == answer.id %}
-                            <p>{{ answercomment.submission_time }} {{ answercomment.message }}</p>
+                        {% if answercomment['answer_id'] == answer['id'] %}
+                            <p>{{ answercomment['message'] }}</p>
                         {% endif %}
 
                     {% endfor %}
-                    </td>
+                </td>
 
             {% endfor %}
 
