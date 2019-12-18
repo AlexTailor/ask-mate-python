@@ -111,3 +111,15 @@ def get_all_comment(cursor, id_):
                    {'id_': id_})
     comments = cursor.fetchall()
     return comments
+
+
+@database_common.connection_handler
+def get_new_comment(cursor, question_id, message, time):
+    cursor.execute('''
+        INSERT INTO comment   
+        (question_id, message, submission_time)
+        VALUES (%(question_id)s , %(messages)s, %(time)s);
+    ''',
+                   {'question_id': question_id,
+                    'messages': message,
+                    'time': time})

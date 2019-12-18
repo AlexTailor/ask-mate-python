@@ -22,6 +22,12 @@
                 </tr>
 
             {% endfor %}
+
+            <form method="get" action="/question/{{ question_id }}/new-comment">
+                <button type="submit">Write comment</button>
+
+            </form>
+
             <form method="get" action="/question/{{ question_id }}/new-answer">
                 <button type="submit">Write answer</button>
 

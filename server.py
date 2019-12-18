@@ -48,6 +48,16 @@ def new_answer(question_id=int):
     return render_template('new-answer.html')
 
 
+@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
+def add_new_comment_to_question(question_id=int):
+    if request.method == 'POST':
+        message = request.form.get('message')
+        time = data_manager.get_timestamp()
+        data_manager.get_new_comment(question_id, message, time)
+        return redirect(url_for("display_a_question", question_id=question_id))
+    return render_template('new-comment.html')
+
+
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=int):
     data_manager.delete_question(question_id)
@@ -61,11 +71,6 @@ def delete_answer(answer_id=int):
     return redirect(url_for("display_a_question", question_id=question_id))
 
 
-@app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
-def add_new_comment_to_question(question_id=int):
-    if request.method == 'POST':
-        return redirect(url_for("display_a_question", question_id=question_id))
-    return render_template('new-answer.html')
 
 
 if __name__ == '__main__':

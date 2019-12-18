@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <h1>Add new comment for question</h1>
+    <form method="post">
+        <label>Write a new comment!</label><br>
+        <textarea name="message" rows="10" cols="50" placeholder="Type your comment here..." required></textarea><br>
+        <button type="submit">Submit</button>
+
+
+    </form>
+
+
+{% endblock %}
