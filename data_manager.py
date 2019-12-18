@@ -34,7 +34,8 @@ def get_question_id(cursor, id_):
                     ''',
                    {'id_': id_})
     question = cursor.fetchone()
-    return question['question_id']
+    if question is not None:
+        return question['question_id']
 
 
 @database_common.connection_handler
@@ -45,7 +46,8 @@ def get_answer_id(cursor, id_):
                     ''',
                    {'id_': id_})
     answer = cursor.fetchone()
-    return answer['id']
+    if answer is not None:
+        return answer['id']
 
 
 @database_common.connection_handler
