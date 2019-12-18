@@ -5,8 +5,14 @@
     {% for question in question_message %}
         <h2 align="center">{{ question.message }}</h2>
     {% endfor %}
+    </form>
+    <form align="center" method="get" action="/question/{{ question_id }}/delete">
+        <p>
+            <button type="submit">Delete</button>
+        </p>
+    </form>
     {% for comment in comments %}
-        <p align="center">{{ comment.id }} {{ comment.message }}</p>
+        <p align="center">{{ comment.submission_time }} {{ comment.message }}</p>
     {% endfor %}
     <div style="text-align: center;">
         <table>
@@ -22,23 +28,23 @@
                 </tr>
 
             {% endfor %}
+            {% for comment in answercomments %}
+                <p align="center">{{ comment.submission_time }} {{ comment.message }}</p>
+                <form method="get" action="/answer/{{ answer_id }}/new-comment">
+                    <button type="submit">Write answer comment</button>
+                </form>
+            {% endfor %}
+
 
             <form method="get" action="/question/{{ question_id }}/new-comment">
                 <button type="submit">Write comment</button>
 
             </form>
+            <br/>
 
             <form method="get" action="/question/{{ question_id }}/new-answer">
                 <button type="submit">Write answer</button>
-
             </form>
-            <form method="get" action="/question/{{ question_id }}/delete">
-                <p>
-                    <button type="submit">Delete</button>
-                </p>
-            </form>
-
-
         </table>
     </div>
 {% endblock %}

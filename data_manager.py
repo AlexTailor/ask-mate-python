@@ -44,8 +44,8 @@ def get_answer_id(cursor, id_):
                     WHERE id =%(id_)s;
                     ''',
                    {'id_': id_})
-    answer = cursor.fetchall()
-    return answer
+    answer = cursor.fetchone()
+    return answer['id']
 
 
 @database_common.connection_handler
@@ -114,6 +114,17 @@ def get_all_comment(cursor, id_):
 
 
 @database_common.connection_handler
+def get_all_answer_comment(cursor, id_):
+    cursor.execute("""
+        SELECT * FROM comment
+        WHERE answer_id = %(id_)s
+    """,
+                   {'id_': id_})
+    answercomments = cursor.fetchall()
+    return answercomments
+
+
+@database_common.connection_handler
 def get_new_comment(cursor, question_id, message, time):
     cursor.execute('''
         INSERT INTO comment   
@@ -121,5 +132,17 @@ def get_new_comment(cursor, question_id, message, time):
         VALUES (%(question_id)s , %(messages)s, %(time)s);
     ''',
                    {'question_id': question_id,
+                    'messages': message,
+                    'time': time})
+
+
+@database_common.connection_handler
+def get_new_answer_comment(cursor, answer_id, message, time):
+    cursor.execute('''
+        INSERT INTO comment   
+        (answer_id, message, submission_time)
+        VALUES (%(answer_id)s , %(messages)s, %(time)s);
+    ''',
+                   {'answer_id': answer_id,
                     'messages': message,
                     'time': time})
