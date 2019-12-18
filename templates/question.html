@@ -20,20 +20,23 @@
                 <tr>
                     <td>{{ answer.message }}
                         <form method="get" action='/answer/{{ answer.id }}/delete'>
-                            <p>
                                 <button type="submit">Delete answer</button>
-                            </p>
                         </form>
+                            <form method="get" action="/answer/{{ answer_id }}/new-comment">
+                                <button type="submit">Write answer comment</button>
+                            </form>
                     </td>
-                </tr>
+                    <td>
+                        {% for answercomment in answercomments %}
+                            {%  if answercomment.answer_id == answer.id %}
+                            <p>{{ answercomment.submission_time }} {{ answercomment.message }}</p>
+                            {%  endif %}
+
+                        {% endfor %}
+                    </td>
 
             {% endfor %}
-            {% for comment in answercomments %}
-                <p align="center">{{ comment.submission_time }} {{ comment.message }}</p>
-                <form method="get" action="/answer/{{ answer_id }}/new-comment">
-                    <button type="submit">Write answer comment</button>
-                </form>
-            {% endfor %}
+
 
 
             <form method="get" action="/question/{{ question_id }}/new-comment">
@@ -47,4 +50,6 @@
             </form>
         </table>
     </div>
+
+
 {% endblock %}
