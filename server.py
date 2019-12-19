@@ -117,6 +117,20 @@ def delete_comment(comment_id=int):
     return redirect(url_for("display_a_question", question_id=question_id))
 
 
+@app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
+def edit_comment(comment_id=int):
+    answer_id = data_manager.get_answer_id_from_comment(comment_id)
+    question_id = data_manager.get_question_id(answer_id)
+
+    comment_message = data_manager.get_single_comment(comment_id)
+    if request.method == 'POST':
+        message = request.form.get('message')
+        time = data_manager.get_timestamp()
+        data_manager.edit_comment(time, comment_id, message)
+        return redirect(url_for('display_a_question', question_id=question_id))
+    return render_template('new-comment.html', comment_message=comment_message)
+
+
 if __name__ == '__main__':
     app.run(
         host='127.0.0.1',

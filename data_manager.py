@@ -49,6 +49,17 @@ def get_single_answer(cursor, id_):
 
 
 @database_common.connection_handler
+def get_single_comment(cursor, id_):
+    cursor.execute('''
+                    SELECT message FROM comment
+                    WHERE id =%(id_)s;
+                    ''',
+                   {'id_': id_})
+    comment = cursor.fetchone()
+    return comment['message']
+
+
+@database_common.connection_handler
 def get_question_id(cursor, id_):
     cursor.execute('''
                     SELECT answer.question_id FROM answer
@@ -141,6 +152,18 @@ def edit_answer(cursor, time, answer_id, message):
     ''',
                    {'time': time,
                     'answer_id': answer_id,
+                    'message': message})
+
+
+@database_common.connection_handler
+def edit_comment(cursor, time, id_, message):
+    cursor.execute('''
+        UPDATE comment   
+        SET message = %(message)s, submission_time = %(time)s
+        WHERE id = %(id_)s;
+    ''',
+                   {'time': time,
+                    'id_': id_,
                     'message': message})
 
 
