@@ -199,8 +199,8 @@ def get_new_answer_comment(cursor, answer_id, message, time):
 def search_function(cursor, keyword):
     cursor.execute('''
         SELECT * FROM question
-        WHERE title = %(keyword)s;
+        WHERE title LIKE %(keyword)s OR message LIKE %(keyword)s;
     ''',
-                   {'keyword': keyword})
+                   {'keyword': f'%{keyword}%'})
     questions = cursor.fetchall()
     return questions
