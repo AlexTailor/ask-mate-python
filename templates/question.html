@@ -5,7 +5,6 @@
     {% for question in question_message %}
         <h2 align="center">{{ question.message }}</h2>
     {% endfor %}
-    </form>
     <form align="center" method="get" action="/question/{{ question_id }}/delete">
         <p>
             <button type="submit">Delete</button>
@@ -21,6 +20,9 @@
                 <td>{{ answer['message'] }}
                     <form method="get" action='/answer/{{ answer['id'] }}/delete'>
                         <button type="submit">Delete answer</button>
+                    </form>
+                    <form method="get" action='/answer/{{ answer['id'] }}/edit'>
+                        <button type="submit">Edit answer</button>
                     </form>
                     <form method="get" action="/answer/{{ answer['id'] }}/new-comment">
                         <button type="submit">Write answer comment</button>

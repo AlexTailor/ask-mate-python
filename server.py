@@ -88,6 +88,18 @@ def delete_answer(answer_id=int):
     return redirect(url_for("display_a_question", question_id=question_id))
 
 
+@app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
+def edit_answer(answer_id=int):
+    question_id = data_manager.get_question_id(answer_id)
+    answer_message = data_manager.get_single_answer(answer_id)
+    if request.method == 'POST':
+        message = request.form.get('message')
+        time = data_manager.get_timestamp()
+        data_manager.edit_answer(time, answer_id, message)
+        return redirect(url_for('display_a_question', question_id=question_id))
+    return render_template('new-answer.html', answer_message=answer_message)
+
+
 if __name__ == '__main__':
     app.run(
         host='127.0.0.1',
