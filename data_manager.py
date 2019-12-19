@@ -16,6 +16,17 @@ def get_all_questions(cursor):
 
 
 @database_common.connection_handler
+def get_last_five_questions(cursor):
+    cursor.execute('''
+        SELECT message FROM question
+        ORDER BY submission_time DESC
+        LIMIT 5;
+    ''')
+    questions = cursor.fetchall()
+    return questions
+
+
+@database_common.connection_handler
 def get_single_question(cursor, id_):
     cursor.execute('''
                     SELECT message FROM question

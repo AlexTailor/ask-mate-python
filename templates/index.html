@@ -6,6 +6,9 @@
 <form method="get" action="/list" align="center">
     <button type="submit">All question</button>
 </form>
-
+<h3>Latest questions:</h3>
+{% for question in last_five_questions %}
+    <p>{{ question.message }}</p>
+{% endfor %}
 {% endblock %}
 
