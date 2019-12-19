@@ -101,6 +101,13 @@ def edit_answer(answer_id=int):
     return render_template('new-answer.html', answer_message=answer_message)
 
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    search_phrase = request.args.get('search')
+    questions = data_manager.search_function(search_phrase)
+    return render_template('list.html', questions=questions)
+
+
 if __name__ == '__main__':
     app.run(
         host='127.0.0.1',

@@ -193,3 +193,14 @@ def get_new_answer_comment(cursor, answer_id, message, time):
                    {'answer_id': answer_id,
                     'messages': message,
                     'time': time})
+
+
+@database_common.connection_handler
+def search_function(cursor, keyword):
+    cursor.execute('''
+        SELECT * FROM question
+        WHERE title = %(keyword)s;
+    ''',
+                   {'keyword': keyword})
+    questions = cursor.fetchall()
+    return questions
