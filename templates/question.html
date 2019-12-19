@@ -28,10 +28,11 @@
                 </td>
                 <td>
                     {% for answercomment in answercomments %}
-                        {% if answercomment['answer_id'] == answer['id'] %}
-                            <p>{{ answercomment['message'] }}</p>
-                        {% endif %}
-
+                        {% for acomment in answercomment %}
+                            {% if acomment['answer_id'] == answer['id'] %}
+                                <p>{{ acomment['message'] }}</p>
+                            {% endif %}
+                        {% endfor %}
                     {% endfor %}
                 </td>
 

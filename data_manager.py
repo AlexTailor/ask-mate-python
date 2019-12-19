@@ -51,6 +51,18 @@ def get_answer_id(cursor, id_):
 
 
 @database_common.connection_handler
+def get_answer_ids(cursor, id_):
+    cursor.execute('''
+                    SELECT id FROM answer
+                    WHERE question_id =%(id_)s;
+                    ''',
+                   {'id_': id_})
+    answer = cursor.fetchall()
+    if answer is not None:
+        return answer['id']
+
+
+@database_common.connection_handler
 def get_answers_for_questions(cursor, id_):
     cursor.execute('''
         SELECT answer.message, answer.id FROM answer
@@ -122,8 +134,7 @@ def get_all_answer_comment(cursor, id_):
         WHERE answer_id = %(id_)s
     """,
                    {'id_': id_})
-    answercomments = cursor.fetchall()
-    return answercomments
+    return cursor.fetchall()
 
 
 @database_common.connection_handler
