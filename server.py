@@ -108,6 +108,15 @@ def search():
     return render_template('list.html', questions=questions)
 
 
+@app.route('/comment/<comment_id>/delete')
+def delete_comment(comment_id=int):
+    answer_id = data_manager.get_answer_id_from_comment(comment_id)
+    question_id = data_manager.get_question_id(answer_id)
+
+    data_manager.delete_comment(comment_id)
+    return redirect(url_for("display_a_question", question_id=question_id))
+
+
 if __name__ == '__main__':
     app.run(
         host='127.0.0.1',

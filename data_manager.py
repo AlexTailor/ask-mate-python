@@ -73,6 +73,18 @@ def get_answer_id(cursor, id_):
 
 
 @database_common.connection_handler
+def get_answer_id_from_comment(cursor, id_):
+    cursor.execute('''
+                    SELECT answer_id FROM comment
+                    WHERE id =%(id_)s;
+                    ''',
+                   {'id_': id_})
+    comment = cursor.fetchone()
+    if comment is not None:
+        return comment['answer_id']
+
+
+@database_common.connection_handler
 def get_answer_ids(cursor, id_):
     cursor.execute('''
                     SELECT id FROM answer
@@ -145,6 +157,15 @@ def delete_question(cursor, id_):
 def delete_answer(cursor, id_):
     cursor.execute('''
         DELETE FROM answer
+        WHERE id = %(id_)s;
+    ''',
+                   {'id_': id_})
+
+
+@database_common.connection_handler
+def delete_comment(cursor, id_):
+    cursor.execute('''
+        DELETE FROM comment
         WHERE id = %(id_)s;
     ''',
                    {'id_': id_})

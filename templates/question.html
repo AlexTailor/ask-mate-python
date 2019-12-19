@@ -27,12 +27,16 @@
                     <form method="get" action="/answer/{{ answer['id'] }}/new-comment">
                         <button type="submit">Write answer comment</button>
                     </form>
+
                 </td>
                 <td>
                     {% for answercomment in answercomments %}
                         {% for acomment in answercomment %}
                             {% if acomment['answer_id'] == answer['id'] %}
                                 <p>{{ acomment['message'] }}</p>
+                                <form method="get" action="/comment/{{ acomment['id'] }}/delete">
+                                    <button type="submit">Delete answer comment</button>
+                                </form>
                             {% endif %}
                         {% endfor %}
                     {% endfor %}
