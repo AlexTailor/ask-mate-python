@@ -1,13 +1,17 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, escape
 import data_manager
 import hashing
 
 app = Flask(__name__)
 
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
 
 @app.route('/', methods=['GET', 'POST'])
 def route_index():
     last_five_questions = data_manager.get_last_five_questions()
+    if 'username' in session:
+        return redirect(url_for('list_questions'))
     return render_template('index.html', last_five_questions=last_five_questions)
 
 
@@ -152,7 +156,14 @@ def login_user():
         hashed = data_manager.get_user_login_data(username)
         hashed_password = hashed['user_password']
         verification = hashing.verify_password(password, hashed_password)
+        session['username'] = request.form['username']
         return render_template('index.html', verification=verification)
+
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':
