@@ -136,6 +136,11 @@ def edit_comment(comment_id=int):
 @app.route('/registration', methods=['GET', 'POST'])
 def register_user():
     if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashed = hashing.hash_password(password)
+        time = data_manager.get_timestamp()
+        data_manager.get_user_registration_data(username, hashed, time)
         return redirect('/list')
     return render_template('registration.html')
 

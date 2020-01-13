@@ -248,3 +248,14 @@ def search_function(cursor, keyword):
                    {'keyword': f'%{keyword}%'})
     questions = cursor.fetchall()
     return questions
+
+
+@database_common.connection_handler
+def get_user_registration_data(cursor, username, hashed, time):
+    cursor.execute('''
+        INSERT INTO login (user_name, user_password, registration_time)
+        VALUES (%(username)s , %(hashed)s, %(time)s);
+    ''',
+                   {'username': username,
+                    'hashed': hashed,
+                    'time': time})
