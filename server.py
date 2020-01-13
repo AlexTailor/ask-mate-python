@@ -156,13 +156,14 @@ def login_user():
         hashed = data_manager.get_user_login_data(username)
         hashed_password = hashed['user_password']
         verification = hashing.verify_password(password, hashed_password)
-        session['username'] = request.form['username']
+        if verification:
+            session['username'] = request.form['username']
         return render_template('index.html', verification=verification)
 
 
 @app.route('/logout')
 def logout():
-    session.pop('username', None)
+    session.clear()
     return redirect(url_for('index'))
 
 
