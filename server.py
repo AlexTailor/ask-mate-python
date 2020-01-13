@@ -144,14 +144,15 @@ def register_user():
     return render_template('registration.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login_user():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-        hashed_password = data_manager.get_user_login_data(username)
+        hashed = data_manager.get_user_login_data(username)
+        hashed_password = hashed['user_password']
         verification = hashing.verify_password(password, hashed_password)
-    return render_template('index.html', verification=verification)
+        return render_template('index.html', verification=verification)
 
 
 if __name__ == '__main__':
