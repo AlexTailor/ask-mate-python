@@ -13,7 +13,6 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
-    print('hello')
     questions = data_manager.get_all_questions()
     return render_template('list.html', questions=questions)
 
@@ -143,6 +142,16 @@ def register_user():
         data_manager.get_user_registration_data(username, hashed, time)
         return redirect('/list')
     return render_template('registration.html')
+
+
+@app.route('/', methods=['GET', 'POST'])
+def login_user():
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
+        hashed_password = data_manager.get_user_login_data(username)
+        verification = hashing.verify_password(password, hashed_password)
+    return render_template('index.html', verification=verification)
 
 
 if __name__ == '__main__':

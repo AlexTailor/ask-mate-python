@@ -259,3 +259,14 @@ def get_user_registration_data(cursor, username, hashed, time):
                    {'username': username,
                     'hashed': hashed,
                     'time': time})
+
+
+@database_common.connection_handler
+def get_user_login_data(cursor, username):
+    cursor.execute('''
+           SELECT user_password FROM login
+           WHERE user_name LIKE %(username)s
+       ''',
+                   {'username': username})
+    crypted_password = cursor.fetchone()
+    return crypted_password
