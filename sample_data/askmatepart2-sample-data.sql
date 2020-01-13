@@ -64,6 +64,14 @@ CREATE TABLE tag (
     name text
 );
 
+DROP TABLE IF EXISTS public.login;
+DROP SEQUENCE IF EXISTS public.login_id_seq;
+CREATE TABLE login (
+    id serial NOT NULL,
+    user_name text,
+    user_password text,
+    registration_time timestamp without time zone
+);
 
 ALTER TABLE ONLY answer
     ADD CONSTRAINT pk_answer_id PRIMARY KEY (id);
