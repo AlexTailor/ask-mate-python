@@ -131,6 +131,13 @@ def edit_comment(comment_id=int):
     return render_template('new-comment.html', comment_message=comment_message)
 
 
+@app.route('/registration', methods=['GET', 'POST'])
+def register_user():
+    if request.method == 'POST':
+        return redirect('/list')
+    return render_template('registration.html')
+
+
 if __name__ == '__main__':
     app.run(
         host='127.0.0.1',
