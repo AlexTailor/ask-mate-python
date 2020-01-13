@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import data_manager
+import hashing
 
 app = Flask(__name__)
 
@@ -12,6 +13,7 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
+    print('hello')
     questions = data_manager.get_all_questions()
     return render_template('list.html', questions=questions)
 
@@ -141,6 +143,6 @@ def register_user():
 if __name__ == '__main__':
     app.run(
         host='127.0.0.1',
-        port=5000,
-        debug=True,
+        port=5001,
+        debug=True
     )
