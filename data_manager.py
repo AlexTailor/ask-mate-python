@@ -309,3 +309,6 @@ def get_user_answers(cursor, id_):
                    {'id_': id_})
     useranswers = cursor.fetchall()
     return useranswers
+
+def get_some():
+    pass
