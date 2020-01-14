@@ -292,5 +292,20 @@ def get_user_questions(cursor, id_):
     ''',
                    {'id_': id_})
     userquestions = cursor.fetchall()
-    print(userquestions)
     return userquestions
+
+
+@database_common.connection_handler
+def get_user_answers(cursor, id_):
+    cursor.execute('''
+    SELECT question.id, question.title
+    FROM question
+    JOIN answer
+    ON question.id = answer.question_id
+    WHERE answer.user_id = %(id_)s
+    GROUP BY question.id, question.title, answer.user_id
+    ;
+    ''',
+                   {'id_': id_})
+    useranswers = cursor.fetchall()
+    return useranswers

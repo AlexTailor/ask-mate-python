@@ -174,7 +174,8 @@ def logout():
 @app.route('/user/<user_id>')
 def user_page(user_id):
     user_questions = data_manager.get_user_questions(user_id)
-    return render_template('userpage.html', user_questions=user_questions, user_id=user_id)
+    user_answers = data_manager.get_user_answers(user_id)
+    return render_template('userpage.html', user_questions=user_questions, user_answers=user_answers, user_id=user_id)
 
 
 if __name__ == '__main__':
