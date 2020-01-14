@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% for question in user_questions %}
+        {{ question.title }}
+    {% endfor %}
+
+
+
+{% endblock %}

@@ -186,6 +186,9 @@
 <a href="/"><img src="/static/askmate.png" alt="AskMate" style="width:300px;"></a>
 {% if session['username'] %}
     <p>Hello, {{ session['username'] }}</p>
+    <form method="get" action="/user/{{ session['id'] }}" align="left">
+        <button type="submit">Profile</button>
+    </form>
     <form method="post" action="/logout" align="left">
         <button type="submit">Logout</button>
     </form>

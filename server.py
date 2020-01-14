@@ -17,6 +17,7 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
+    print(session)
     questions = data_manager.get_all_questions()
     return render_template('list.html', questions=questions)
 
@@ -156,15 +157,24 @@ def login_user():
         hashed = data_manager.get_user_login_data(username)
         hashed_password = hashed['password']
         verification = hashing.verify_password(password, hashed_password)
+        last_five_questions = data_manager.get_last_five_questions()
         if verification:
             session['username'] = request.form['username']
-        return render_template('index.html', verification=verification)
+            session['id'] = data_manager.get_user_id(username)
+            print(session['id'])
+        return render_template('index.html', verification=verification, last_five_questions=last_five_questions)
 
 
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.clear()
     return redirect(url_for('route_index'))
+
+
+@app.route('/user/<user_id>')
+def user_page(user_id):
+    user_questions = data_manager.get_user_questions(user_id)
+    return render_template('userpage.html', user_questions=user_questions, user_id=user_id)
 
 
 if __name__ == '__main__':

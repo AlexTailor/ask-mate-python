@@ -270,3 +270,27 @@ def get_user_login_data(cursor, username):
                    {'username': username})
     crypted_password = cursor.fetchone()
     return crypted_password
+
+
+@database_common.connection_handler
+def get_user_id(cursor, username):
+    cursor.execute('''
+        SELECT id FROM user_list
+        WHERE user_name = %(username)s;
+        
+    ''',
+                   {'username': username})
+    user_id = cursor.fetchone()
+    return user_id['id']
+
+
+@database_common.connection_handler
+def get_user_questions(cursor, id):
+    cursor.execute(''' 
+    SELECT title FROM question
+    WHERE user_id = %(id)s;
+    ''',
+                   {'id': id})
+    userquestions = cursor.fetchall()
+    print(userquestions)
+    return userquestions
