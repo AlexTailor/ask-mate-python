@@ -243,7 +243,7 @@ def get_new_answer_comment(cursor, answer_id, message, time):
 def search_function(cursor, keyword):
     cursor.execute('''
         SELECT * FROM question
-        WHERE title LIKE %(keyword)s OR message LIKE %(keyword)s;
+        WHERE lower(title) LIKE lower(%(keyword)s) OR lower(message) LIKE lower(%(keyword)s);
     ''',
                    {'keyword': f'%{keyword}%'})
     questions = cursor.fetchall()
@@ -285,12 +285,12 @@ def get_user_id(cursor, username):
 
 
 @database_common.connection_handler
-def get_user_questions(cursor, id):
+def get_user_questions(cursor, id_):
     cursor.execute(''' 
-    SELECT title FROM question
-    WHERE user_id = %(id)s;
+    SELECT id, title FROM question
+    WHERE user_id = %(id_)s;
     ''',
-                   {'id': id})
+                   {'id_': id_})
     userquestions = cursor.fetchall()
     print(userquestions)
     return userquestions
