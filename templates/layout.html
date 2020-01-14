@@ -184,6 +184,20 @@
 </head>
 <body style="background-color:#19adf7;">
 <a href="/"><img src="/static/askmate.png" alt="AskMate" style="width:300px;"></a>
+{% if session['username'] %}
+    <p>Hello, {{ session['username'] }}</p>
+    <form method="post" action="/logout" align="left">
+        <button type="submit">Logout</button>
+    </form>
+{% else %}
+    <div align="right">
+        <form method="post" action="/login">
+            <input type="text" name="username" min="3" placeholder="username" required><br>
+            <input type="password" name="password" min="3" placeholder="password" required><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+{% endif %}
 {% block content %} {% endblock %}
 </body>
 </html>

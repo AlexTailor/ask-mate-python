@@ -161,10 +161,10 @@ def login_user():
         return render_template('index.html', verification=verification)
 
 
-@app.route('/logout')
+@app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.clear()
-    return redirect(url_for('index'))
+    return redirect(url_for('route_index'))
 
 
 if __name__ == '__main__':
