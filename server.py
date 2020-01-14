@@ -154,7 +154,7 @@ def login_user():
         username = request.form.get('username')
         password = request.form.get('password')
         hashed = data_manager.get_user_login_data(username)
-        hashed_password = hashed['user_password']
+        hashed_password = hashed['password']
         verification = hashing.verify_password(password, hashed_password)
         if verification:
             session['username'] = request.form['username']

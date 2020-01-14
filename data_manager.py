@@ -253,7 +253,7 @@ def search_function(cursor, keyword):
 @database_common.connection_handler
 def get_user_registration_data(cursor, username, hashed, time):
     cursor.execute('''
-        INSERT INTO login (user_name, user_password, registration_time)
+        INSERT INTO user_list (user_name, password, registration_time)
         VALUES (%(username)s , %(hashed)s, %(time)s);
     ''',
                    {'username': username,
@@ -264,7 +264,7 @@ def get_user_registration_data(cursor, username, hashed, time):
 @database_common.connection_handler
 def get_user_login_data(cursor, username):
     cursor.execute('''
-           SELECT user_password FROM login
+           SELECT password FROM user_list
            WHERE user_name LIKE %(username)s
        ''',
                    {'username': username})
