@@ -309,3 +309,19 @@ def get_user_answers(cursor, id_):
                    {'id_': id_})
     useranswers = cursor.fetchall()
     return useranswers
+
+
+@database_common.connection_handler
+def get_user_comments(cursor, id_):
+    cursor.execute('''
+    SELECT question.id, question.title
+    FROM question
+    JOIN comment
+    ON question.id = comment.question_id
+    WHERE comment.user_id = %(id_)s
+    GROUP BY question.id, question.title, comment.user_id
+    ;
+    ''',
+                   {'id_': id_})
+    usercomments = cursor.fetchall()
+    return usercomments

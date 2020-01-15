@@ -9,6 +9,8 @@
         <a href="{{ url_for('display_a_question', question_id=question.id) }}"> {{ question.title }}</a><br>
     {% endfor %}
     <h3>My Comments</h3>
-
+    {% for question in user_comments %}
+        <a href="{{ url_for('display_a_question', question_id=question.id) }}"> {{ question.title }}</a><br>
+    {% endfor %}
 
 {% endblock %}
