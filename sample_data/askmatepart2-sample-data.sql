@@ -36,7 +36,7 @@ CREATE TABLE user_list
     registration_time timestamp without time zone,
     user_name         text,
     password          char(60),
-    rank              integer
+    reputation        integer
 );
 
 DROP TABLE IF EXISTS public.question;

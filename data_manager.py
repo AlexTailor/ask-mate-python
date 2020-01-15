@@ -325,3 +325,14 @@ def get_user_comments(cursor, id_):
                    {'id_': id_})
     usercomments = cursor.fetchall()
     return usercomments
+
+
+@database_common.connection_handler
+def get_reputation(cursor, id_):
+    cursor.execute(''' 
+    SELECT reputation FROM user_list
+    WHERE id = %(id_)s;
+    ''',
+                   {'id_': id_})
+    reputation = cursor.fetchone()
+    return reputation['reputation']
