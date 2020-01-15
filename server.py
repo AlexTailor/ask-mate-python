@@ -17,7 +17,6 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
-    print(session)
     questions = data_manager.get_all_questions()
     return render_template('list.html', questions=questions)
 
@@ -161,7 +160,6 @@ def login_user():
         if verification:
             session['username'] = request.form['username']
             session['id'] = data_manager.get_user_id(username)
-            print(session['id'])
         return render_template('index.html', verification=verification, last_five_questions=last_five_questions)
 
 
@@ -179,6 +177,12 @@ def user_page(user_id):
     reputation = data_manager.get_reputation(user_id)
     return render_template('userpage.html', user_questions=user_questions, user_answers=user_answers,
                            user_comments=user_comments, user_id=user_id, reputation=reputation)
+
+
+@app.route('/users')
+def list_every_user():
+    users = data_manager.get_all_users()
+    return render_template('users.html', users=users)
 
 
 if __name__ == '__main__':

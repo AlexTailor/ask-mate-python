@@ -185,9 +185,9 @@
 <body style="background-color:#19adf7;">
 <a href="/"><img src="/static/askmate.png" alt="AskMate" style="width:300px;"></a>
 {% if session['username'] %}
-    <p>Hello, {{ session['username'] }}</p>
-    <form method="get" action="/user/{{ session['id'] }}" align="left">
-        <button type="submit">Profile</button>
+    <p>Hello, <a href="/user/{{session['id']}}">{{ session['username'] }}</a></p>
+    <form method="get" action="/users" align="left">
+        <button type="submit">See all users</button>
     </form>
     <form method="post" action="/logout" align="left">
         <button type="submit">Logout</button>

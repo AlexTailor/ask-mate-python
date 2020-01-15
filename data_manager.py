@@ -253,8 +253,8 @@ def search_function(cursor, keyword):
 @database_common.connection_handler
 def get_user_registration_data(cursor, username, hashed, time):
     cursor.execute('''
-        INSERT INTO user_list (user_name, password, registration_time)
-        VALUES (%(username)s , %(hashed)s, %(time)s);
+        INSERT INTO user_list (user_name, password, registration_time, reputation)
+        VALUES (%(username)s , %(hashed)s, %(time)s, 0);
     ''',
                    {'username': username,
                     'hashed': hashed,
@@ -336,3 +336,12 @@ def get_reputation(cursor, id_):
                    {'id_': id_})
     reputation = cursor.fetchone()
     return reputation['reputation']
+
+
+@database_common.connection_handler
+def get_all_users(cursor):
+    cursor.execute(''' 
+    SELECT * FROM user_list;
+    ''')
+    all_users = cursor.fetchall()
+    return all_users
