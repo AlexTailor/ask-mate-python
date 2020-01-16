@@ -27,6 +27,9 @@
                     <form method="get" action="/answer/{{ answer['id'] }}/new-comment">
                         <button type="submit">Write answer comment</button>
                     </form>
+                    <form method="post" action="/question/{{ answer['question_id'] }}">
+                        <button type="submit">Accept this answer</button>
+                    </form>
 
                 </td>
                 <td>

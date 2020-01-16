@@ -110,7 +110,7 @@ def get_answer_ids(cursor, id_):
 @database_common.connection_handler
 def get_answers_for_questions(cursor, id_):
     cursor.execute('''
-        SELECT answer.message, answer.id FROM answer
+        SELECT answer.message, answer.id, question_id FROM answer
         INNER JOIN question ON answer.question_id = question.id
         WHERE question_id = %(id_)s;
     ''',
@@ -285,6 +285,18 @@ def get_user_id(cursor, username):
 
 
 @database_common.connection_handler
+def get_user_id_from_answer(cursor, id_):
+    cursor.execute('''
+        SELECT user_id FROM answer
+        WHERE id = %(id_)s;
+
+    ''',
+                   {'id_': id_})
+    user_id = cursor.fetchone()
+    return user_id['id']
+
+
+@database_common.connection_handler
 def get_user_questions(cursor, id_):
     cursor.execute(''' 
     SELECT id, title FROM question
@@ -345,3 +357,14 @@ def get_all_users(cursor):
     ''')
     all_users = cursor.fetchall()
     return all_users
+
+
+# @database_common.connection_handler
+# def increase_reputation_on_accepting_answer(cursor, accepted_answer):
+#     cursor.execute('''
+#     INSERT INTO user_list (reputation)
+#     VALUES (reputation + accepted_answer);
+#     ''',
+#                    {'accepted_answer': accepted_answer})
+#     reputation = cursor.fetchall()
+#     return reputation
