@@ -17,12 +17,16 @@ def route_index():
 
 @app.route('/list')
 def list_questions():
+    if 'username' not in session:
+        return redirect('/')
     questions = data_manager.get_all_questions()
     return render_template('list.html', questions=questions)
 
 
 @app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id):
+    if 'username' not in session:
+        return redirect('/')
     question = data_manager.get_single_question(question_id)
     answer_id = []
     answers = data_manager.get_answers_for_questions(question_id)
@@ -39,60 +43,76 @@ def display_a_question(question_id):
 
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_new_question():
-    if request.method == 'POST':
-        user_id = session['id']
-        titles = request.form.get('title')
-        messages = request.form.get('message')
-        time = data_manager.get_timestamp()
-        data_manager.get_new_question(time, titles, messages, user_id)
-        return redirect('/list')
+    if 'username' not in session:
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            user_id = session['id']
+            titles = request.form.get('title')
+            messages = request.form.get('message')
+            time = data_manager.get_timestamp()
+            data_manager.get_new_question(time, titles, messages, user_id)
+            return redirect('/list')
 
-    elif request.method == 'GET':
-        return render_template('add-question.html')
+        elif request.method == 'GET':
+            return render_template('add-question.html')
 
 
 @app.route('/question/<question_id>/new-answer', methods=['GET', 'POST'])
 def new_answer(question_id=int):
-    if request.method == 'POST':
-        time = data_manager.get_timestamp()
-        messages = request.form.get('message')
-        user_id = session['id']
-        data_manager.get_new_answer(time, question_id, messages, user_id)
-        return redirect(url_for("display_a_question", question_id=question_id))
-    return render_template('new-answer.html')
+    if 'username' not in session:
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            time = data_manager.get_timestamp()
+            messages = request.form.get('message')
+            user_id = session['id']
+            data_manager.get_new_answer(time, question_id, messages, user_id)
+            return redirect(url_for("display_a_question", question_id=question_id))
+        return render_template('new-answer.html')
 
 
 @app.route('/question/<question_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_question(question_id=int):
-    if request.method == 'POST':
-        message = request.form.get('message')
-        time = data_manager.get_timestamp()
-        user_id = session['id']
-        data_manager.get_new_comment(question_id, message, time, user_id)
-        return redirect(url_for("display_a_question", question_id=question_id))
-    return render_template('new-comment.html')
+    if 'username' not in session:
+        return redirect('/')
+    else:
+        if request.method == 'POST':
+            message = request.form.get('message')
+            time = data_manager.get_timestamp()
+            user_id = session['id']
+            data_manager.get_new_comment(question_id, message, time, user_id)
+            return redirect(url_for("display_a_question", question_id=question_id))
+        return render_template('new-comment.html')
 
 
 @app.route('/answer/<answer_id>/new-comment', methods=['GET', 'POST'])
 def add_new_comment_to_answer(answer_id=int):
-    question_id = data_manager.get_question_id(answer_id)
-    if request.method == 'POST':
-        message = request.form.get('message')
-        time = data_manager.get_timestamp()
-        user_id = session['id']
-        data_manager.get_new_answer_comment(answer_id, message, time, user_id)
-        return redirect(url_for('display_a_question', question_id=question_id))
-    return render_template('new-comment.html')
+    if 'username' not in session:
+        return redirect('/')
+    else:
+        question_id = data_manager.get_question_id(answer_id)
+        if request.method == 'POST':
+            message = request.form.get('message')
+            time = data_manager.get_timestamp()
+            user_id = session['id']
+            data_manager.get_new_answer_comment(answer_id, message, time, user_id)
+            return redirect(url_for('display_a_question', question_id=question_id))
+        return render_template('new-comment.html')
 
 
 @app.route('/question/<question_id>/delete')
 def delete_question(question_id=int):
+    if 'username' not in session:
+        return redirect('/')
     data_manager.delete_question(question_id)
     return redirect('/list')
 
 
 @app.route('/answer/<answer_id>/delete')
 def delete_answer(answer_id=int):
+    if 'username' not in session:
+        return redirect('/')
     question_id = data_manager.get_question_id(answer_id)
     data_manager.delete_answer(answer_id)
     return redirect(url_for("display_a_question", question_id=question_id))
@@ -100,18 +120,23 @@ def delete_answer(answer_id=int):
 
 @app.route('/answer/<answer_id>/edit', methods=['GET', 'POST'])
 def edit_answer(answer_id=int):
-    question_id = data_manager.get_question_id(answer_id)
-    answer_message = data_manager.get_single_answer(answer_id)
-    if request.method == 'POST':
-        message = request.form.get('message')
-        time = data_manager.get_timestamp()
-        data_manager.edit_answer(time, answer_id, message)
-        return redirect(url_for('display_a_question', question_id=question_id))
-    return render_template('new-answer.html', answer_message=answer_message)
+    if 'username' not in session:
+        return redirect('/')
+    else:
+        question_id = data_manager.get_question_id(answer_id)
+        answer_message = data_manager.get_single_answer(answer_id)
+        if request.method == 'POST':
+            message = request.form.get('message')
+            time = data_manager.get_timestamp()
+            data_manager.edit_answer(time, answer_id, message)
+            return redirect(url_for('display_a_question', question_id=question_id))
+        return render_template('new-answer.html', answer_message=answer_message)
 
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    if 'username' not in session:
+        return redirect('/')
     search_phrase = request.args.get('search')
     questions = data_manager.search_function(search_phrase)
     return render_template('list.html', questions=questions)
@@ -119,25 +144,28 @@ def search():
 
 @app.route('/comment/<comment_id>/delete')
 def delete_comment(comment_id=int):
+    if 'username' not in session:
+        return redirect('/')
     answer_id = data_manager.get_answer_id_from_comment(comment_id)
     question_id = data_manager.get_question_id(answer_id)
-
     data_manager.delete_comment(comment_id)
     return redirect(url_for("display_a_question", question_id=question_id))
 
 
 @app.route('/comment/<comment_id>/edit', methods=['GET', 'POST'])
 def edit_comment(comment_id=int):
-    answer_id = data_manager.get_answer_id_from_comment(comment_id)
-    question_id = data_manager.get_question_id(answer_id)
-
-    comment_message = data_manager.get_single_comment(comment_id)
-    if request.method == 'POST':
-        message = request.form.get('message')
-        time = data_manager.get_timestamp()
-        data_manager.edit_comment(time, comment_id, message)
-        return redirect(url_for('display_a_question', question_id=question_id))
-    return render_template('new-comment.html', comment_message=comment_message)
+    if 'username' not in session:
+        return redirect('/')
+    else:
+        answer_id = data_manager.get_answer_id_from_comment(comment_id)
+        question_id = data_manager.get_question_id(answer_id)
+        comment_message = data_manager.get_single_comment(comment_id)
+        if request.method == 'POST':
+            message = request.form.get('message')
+            time = data_manager.get_timestamp()
+            data_manager.edit_comment(time, comment_id, message)
+            return redirect(url_for('display_a_question', question_id=question_id))
+        return render_template('new-comment.html', comment_message=comment_message)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -174,6 +202,8 @@ def logout():
 
 @app.route('/user/<user_id>')
 def user_page(user_id):
+    if 'username' not in session:
+        return redirect('/')
     user_questions = data_manager.get_user_questions(user_id)
     user_answers = data_manager.get_user_answers(user_id)
     user_comments = data_manager.get_user_comments(user_id)
@@ -184,6 +214,8 @@ def user_page(user_id):
 
 @app.route('/users')
 def list_every_user():
+    if 'username' not in session:
+        return redirect('/')
     users = data_manager.get_all_users()
     return render_template('users.html', users=users)
 
