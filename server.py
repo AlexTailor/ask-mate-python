@@ -40,10 +40,11 @@ def display_a_question(question_id):
 @app.route('/add-question', methods=['GET', 'POST'])
 def add_new_question():
     if request.method == 'POST':
+        user_id = session['id']
         titles = request.form.get('title')
         messages = request.form.get('message')
         time = data_manager.get_timestamp()
-        data_manager.get_new_question(time, titles, messages)
+        data_manager.get_new_question(time, titles, messages, user_id)
         return redirect('/list')
 
     elif request.method == 'GET':

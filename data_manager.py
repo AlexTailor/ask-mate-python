@@ -120,15 +120,16 @@ def get_answers_for_questions(cursor, id_):
 
 
 @database_common.connection_handler
-def get_new_question(cursor, time, titles, messages):
+def get_new_question(cursor, time, titles, messages, id_):
     cursor.execute('''
         INSERT INTO question   
-        (submission_time, view_number, vote_number, title, message)
-        VALUES (%(time)s, 0, 0, %(titles)s , %(messages)s);
+        (submission_time, view_number, vote_number, title, message, user_id)
+        VALUES (%(time)s, 0, 0, %(titles)s , %(messages)s, %(id_)s);
     ''',
                    {'time': time,
                     'titles': titles,
-                    'messages': messages})
+                    'messages': messages,
+                    'id_': id_})
 
 
 @database_common.connection_handler
