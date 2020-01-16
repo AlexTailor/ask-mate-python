@@ -133,15 +133,16 @@ def get_new_question(cursor, time, titles, messages, id_):
 
 
 @database_common.connection_handler
-def get_new_answer(cursor, time, question_id, messages):
+def get_new_answer(cursor, time, question_id, messages, id_):
     cursor.execute('''
         INSERT INTO answer   
-        (submission_time, vote_number, question_id, message)
-        VALUES (%(time)s, 0, %(question_id)s , %(messages)s);
+        (submission_time, vote_number, question_id, message, user_id)
+        VALUES (%(time)s, 0, %(question_id)s , %(messages)s, %(id_)s);
     ''',
                    {'time': time,
                     'question_id': question_id,
-                    'messages': messages})
+                    'messages': messages,
+                    'id_': id_})
 
 
 @database_common.connection_handler

@@ -56,7 +56,8 @@ def new_answer(question_id=int):
     if request.method == 'POST':
         time = data_manager.get_timestamp()
         messages = request.form.get('message')
-        data_manager.get_new_answer(time, question_id, messages)
+        user_id = session['id']
+        data_manager.get_new_answer(time, question_id, messages, user_id)
         return redirect(url_for("display_a_question", question_id=question_id))
     return render_template('new-answer.html')
 
