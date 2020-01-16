@@ -218,27 +218,29 @@ def get_all_answer_comment(cursor, id_):
 
 
 @database_common.connection_handler
-def get_new_comment(cursor, question_id, message, time):
+def get_new_comment(cursor, question_id, message, time, id_):
     cursor.execute('''
         INSERT INTO comment   
-        (question_id, message, submission_time)
-        VALUES (%(question_id)s , %(messages)s, %(time)s);
+        (question_id, message, submission_time, user_id)
+        VALUES (%(question_id)s , %(messages)s, %(time)s, %(id_)s);
     ''',
                    {'question_id': question_id,
                     'messages': message,
-                    'time': time})
+                    'time': time,
+                    'id_': id_})
 
 
 @database_common.connection_handler
-def get_new_answer_comment(cursor, answer_id, message, time):
+def get_new_answer_comment(cursor, answer_id, message, time, id_):
     cursor.execute('''
         INSERT INTO comment   
-        (answer_id, message, submission_time)
-        VALUES (%(answer_id)s , %(messages)s, %(time)s);
+        (answer_id, message, submission_time, user_id)
+        VALUES (%(answer_id)s , %(messages)s, %(time)s, %(id_)s);
     ''',
                    {'answer_id': answer_id,
                     'messages': message,
-                    'time': time})
+                    'time': time,
+                    'id_': id_})
 
 
 @database_common.connection_handler

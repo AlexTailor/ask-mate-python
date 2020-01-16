@@ -67,7 +67,8 @@ def add_new_comment_to_question(question_id=int):
     if request.method == 'POST':
         message = request.form.get('message')
         time = data_manager.get_timestamp()
-        data_manager.get_new_comment(question_id, message, time)
+        user_id = session['id']
+        data_manager.get_new_comment(question_id, message, time, user_id)
         return redirect(url_for("display_a_question", question_id=question_id))
     return render_template('new-comment.html')
 
@@ -78,7 +79,8 @@ def add_new_comment_to_answer(answer_id=int):
     if request.method == 'POST':
         message = request.form.get('message')
         time = data_manager.get_timestamp()
-        data_manager.get_new_answer_comment(answer_id, message, time)
+        user_id = session['id']
+        data_manager.get_new_answer_comment(answer_id, message, time, user_id)
         return redirect(url_for('display_a_question', question_id=question_id))
     return render_template('new-comment.html')
 
