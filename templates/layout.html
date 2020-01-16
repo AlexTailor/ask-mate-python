@@ -3,6 +3,22 @@
     <meta charset="UTF-8">
     <title>AskMate</title>
     <style>
+        button {
+            background-color: #1976d2;
+            color: white;
+            border: 1px solid #01579b;
+            border-radius: 4px;
+        {#padding: 10px 73px;#}{#margin: 4px;#} font-family: 'Montserrat', sans-serif;
+        {#font-size: 1.25rem;#}
+        }
+
+        body {
+            padding: 5px;
+            font-family: 'Montserrat', sans-serif;
+            {#text-align: center;#}
+            background-color: #1976d2;
+        }
+
         /* customizable snowflake styling */
         .snowflake {
             color: #fff;
@@ -185,7 +201,7 @@
 <body style="background-color:#19adf7;">
 <a href="/"><img src="/static/askmate.png" alt="AskMate" style="width:300px;"></a>
 {% if session['username'] %}
-    <p>Hello, <a href="/user/{{session['id']}}">{{ session['username'] }}</a></p>
+    <p>Hello, <a href="/user/{{ session['id'] }}">{{ session['username'] }}</a></p>
     <form method="get" action="/users" align="left">
         <button type="submit">See all users</button>
     </form>
