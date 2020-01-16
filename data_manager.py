@@ -18,7 +18,7 @@ def get_all_questions(cursor):
 @database_common.connection_handler
 def get_last_five_questions(cursor):
     cursor.execute('''
-        SELECT message FROM question
+        SELECT title FROM question
         ORDER BY submission_time DESC
         LIMIT 5;
     ''')

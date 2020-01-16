@@ -160,11 +160,10 @@ def login_user():
         hashed = data_manager.get_user_login_data(username)
         hashed_password = hashed['password']
         verification = hashing.verify_password(password, hashed_password)
-        last_five_questions = data_manager.get_last_five_questions()
         if verification:
             session['username'] = request.form['username']
             session['id'] = data_manager.get_user_id(username)
-        return render_template('index.html', verification=verification, last_five_questions=last_five_questions)
+        return redirect('/')
 
 
 @app.route('/logout', methods=['GET', 'POST'])

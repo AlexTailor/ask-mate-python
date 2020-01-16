@@ -1,15 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
     <h3>Reputation: </h3>{{ reputation }}
-    <h3>My Questions</h3>
+    <h3>User Questions</h3>
     {% for question in user_questions %}
         <a href="{{ url_for('display_a_question', question_id=question.id) }}"> {{ question.title }}</a><br>
     {% endfor %}
-    <h3>My Answers</h3>
+    <h3>User Answers</h3>
     {% for question in user_answers %}
         <a href="{{ url_for('display_a_question', question_id=question.id) }}"> {{ question.title }}</a><br>
     {% endfor %}
-    <h3>My Comments</h3>
+    <h3>User Comments</h3>
     {% for question in user_comments %}
         <a href="{{ url_for('display_a_question', question_id=question.id) }}"> {{ question.title }}</a><br>
     {% endfor %}

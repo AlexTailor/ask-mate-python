@@ -13,15 +13,8 @@
 
     <h3>Latest questions:</h3>
     {% for question in last_five_questions %}
-        <p>{{ question.message }}</p>
+        <p>{{ question.title }}</p>
     {% endfor %}
-
-    <form method="get" action="/search" align="right">
-        <label for id="search">
-            <input type="text" name="search" id="search" min="3">
-        </label>
-        <button type="submit">Search</button>
-    </form>
 
 {% endblock %}
 
