@@ -176,6 +176,8 @@ def register_user():
         hashed = hashing.hash_password(password)
         time = data_manager.get_timestamp()
         data_manager.get_user_registration_data(username, hashed, time)
+        session['username'] = request.form['username']
+        session['id'] = data_manager.get_user_id(username)
         return redirect('/list')
     return render_template('registration.html')
 
