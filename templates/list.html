@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 
 {% block content %}
+    <form method="get" action="/search" align="right">
+        <label for id="search">
+            <input type="text" name="search" id="search" min="3">
+        </label>
+        <button type="submit">Search</button>
+    </form>
     <h1>All Questions</h1>
     <button><a href="/add-question">Add New Question</a></button>
     <table>

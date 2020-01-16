@@ -18,7 +18,7 @@ def get_all_questions(cursor):
 @database_common.connection_handler
 def get_last_five_questions(cursor):
     cursor.execute('''
-        SELECT message FROM question
+        SELECT title FROM question
         ORDER BY submission_time DESC
         LIMIT 5;
     ''')
@@ -120,27 +120,29 @@ def get_answers_for_questions(cursor, id_):
 
 
 @database_common.connection_handler
-def get_new_question(cursor, time, titles, messages):
+def get_new_question(cursor, time, titles, messages, id_):
     cursor.execute('''
         INSERT INTO question   
-        (submission_time, view_number, vote_number, title, message)
-        VALUES (%(time)s, 0, 0, %(titles)s , %(messages)s);
+        (submission_time, view_number, vote_number, title, message, user_id)
+        VALUES (%(time)s, 0, 0, %(titles)s , %(messages)s, %(id_)s);
     ''',
                    {'time': time,
                     'titles': titles,
-                    'messages': messages})
+                    'messages': messages,
+                    'id_': id_})
 
 
 @database_common.connection_handler
-def get_new_answer(cursor, time, question_id, messages):
+def get_new_answer(cursor, time, question_id, messages, id_):
     cursor.execute('''
         INSERT INTO answer   
-        (submission_time, vote_number, question_id, message)
-        VALUES (%(time)s, 0, %(question_id)s , %(messages)s);
+        (submission_time, vote_number, question_id, message, user_id)
+        VALUES (%(time)s, 0, %(question_id)s , %(messages)s, %(id_)s);
     ''',
                    {'time': time,
                     'question_id': question_id,
-                    'messages': messages})
+                    'messages': messages,
+                    'id_': id_})
 
 
 @database_common.connection_handler
@@ -216,27 +218,29 @@ def get_all_answer_comment(cursor, id_):
 
 
 @database_common.connection_handler
-def get_new_comment(cursor, question_id, message, time):
+def get_new_comment(cursor, question_id, message, time, id_):
     cursor.execute('''
         INSERT INTO comment   
-        (question_id, message, submission_time)
-        VALUES (%(question_id)s , %(messages)s, %(time)s);
+        (question_id, message, submission_time, user_id)
+        VALUES (%(question_id)s , %(messages)s, %(time)s, %(id_)s);
     ''',
                    {'question_id': question_id,
                     'messages': message,
-                    'time': time})
+                    'time': time,
+                    'id_': id_})
 
 
 @database_common.connection_handler
-def get_new_answer_comment(cursor, answer_id, message, time):
+def get_new_answer_comment(cursor, answer_id, message, time, id_):
     cursor.execute('''
         INSERT INTO comment   
-        (answer_id, message, submission_time)
-        VALUES (%(answer_id)s , %(messages)s, %(time)s);
+        (answer_id, message, submission_time, user_id)
+        VALUES (%(answer_id)s , %(messages)s, %(time)s, %(id_)s);
     ''',
                    {'answer_id': answer_id,
                     'messages': message,
-                    'time': time})
+                    'time': time,
+                    'id_': id_})
 
 
 @database_common.connection_handler
