@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session, escape
+from flask import Flask, render_template, request, redirect, url_for, session
 import data_manager
 import hashing
 
@@ -23,7 +23,7 @@ def list_questions():
     return render_template('list.html', questions=questions)
 
 
-@app.route('/question/<question_id>', methods=['GET', 'POST'])
+@app.route('/question/<question_id>')
 def display_a_question(question_id):
     if 'username' not in session:
         return redirect('/')
@@ -53,7 +53,6 @@ def add_new_question():
             time = data_manager.get_timestamp()
             data_manager.get_new_question(time, titles, messages, user_id)
             return redirect('/list')
-
         elif request.method == 'GET':
             return render_template('add-question.html')
 
@@ -133,7 +132,7 @@ def edit_answer(answer_id=int):
         return render_template('new-answer.html', answer_message=answer_message)
 
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search')
 def search():
     if 'username' not in session:
         return redirect('/')
@@ -182,21 +181,20 @@ def register_user():
     return render_template('registration.html')
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login_user():
-    if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
-        hashed = data_manager.get_user_login_data(username)
-        hashed_password = hashed['password']
-        verification = hashing.verify_password(password, hashed_password)
-        if verification:
-            session['username'] = request.form['username']
-            session['id'] = data_manager.get_user_id(username)
-        return redirect('/')
+    username = request.form.get('username')
+    password = request.form.get('password')
+    hashed = data_manager.get_user_login_data(username)
+    hashed_password = hashed['password']
+    verification = hashing.verify_password(password, hashed_password)
+    if verification:
+        session['username'] = request.form['username']
+        session['id'] = data_manager.get_user_id(username)
+    return redirect('/')
 
 
-@app.route('/logout', methods=['GET', 'POST'])
+@app.route('/logout', methods=['POST'])
 def logout():
     session.clear()
     return redirect(url_for('route_index'))
