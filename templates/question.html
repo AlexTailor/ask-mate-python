@@ -4,12 +4,14 @@
 
     {% for question in question_message %}
         <h2 align="center">{{ question.message }}</h2>
+        <form align="center" method="get" action="/question/{{ question_id }}/delete">
+            <p>
+                {% if question.user_id == session['id'] %}
+                    <button type="submit">Delete</button>
+                {% endif %}
+            </p>
+        </form>
     {% endfor %}
-    <form align="center" method="get" action="/question/{{ question_id }}/delete">
-        <p>
-            <button type="submit">Delete</button>
-        </p>
-    </form>
     {% for comment in comments %}
         <p align="center">{{ comment.submission_time }} {{ comment.message }}</p>
     {% endfor %}
@@ -18,18 +20,22 @@
             {% for answer in answers %}
                 <tr>
                 <td>{{ answer['message'] }}
-                    <form method="get" action='/answer/{{ answer['id'] }}/delete'>
-                        <button type="submit">Delete answer</button>
-                    </form>
-                    <form method="get" action='/answer/{{ answer['id'] }}/edit'>
-                        <button type="submit">Edit answer</button>
-                    </form>
+                    {% if answer.user_id == session['id'] %}
+                        <form method="get" action='/answer/{{ answer['id'] }}/delete'>
+                            <button type="submit">Delete answer</button>
+                        </form>
+                        <form method="get" action='/answer/{{ answer['id'] }}/edit'>
+                            <button type="submit">Edit answer</button>
+                        </form>
+                    {% endif %}
                     <form method="get" action="/answer/{{ answer['id'] }}/new-comment">
                         <button type="submit">Write answer comment</button>
                     </form>
-                    <form method="post" action="/question/{{ answer['question_id'] }}">
-                        <button type="submit">Accept this answer</button>
-                    </form>
+                    {% if answer.user_id != session['id'] %}
+                        <form method="post" action="/answer/{{ answer['id'] }}">
+                            <button type="submit">Accept this answer</button>
+                        </form>
+                    {% endif %}
 
                 </td>
                 <td>
@@ -37,12 +43,14 @@
                         {% for acomment in answercomment %}
                             {% if acomment['answer_id'] == answer['id'] %}
                                 <p>{{ acomment['message'] }}</p>
-                                <form method="get" action="/comment/{{ acomment['id'] }}/delete">
-                                    <button type="submit">Delete answer comment</button>
-                                </form>
-                                <form method="get" action="/comment/{{ acomment['id'] }}/edit">
-                                    <button type="submit">Edit answer comment</button>
-                                </form>
+                                {% if acomment['user_id'] == session['id'] %}
+                                    <form method="get" action="/comment/{{ acomment['id'] }}/delete">
+                                        <button type="submit">Delete answer comment</button>
+                                    </form>
+                                    <form method="get" action="/comment/{{ acomment['id'] }}/edit">
+                                        <button type="submit">Edit answer comment</button>
+                                    </form>
+                                {% endif %}
                             {% endif %}
                         {% endfor %}
                     {% endfor %}

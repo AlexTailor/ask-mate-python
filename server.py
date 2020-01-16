@@ -23,26 +23,32 @@ def list_questions():
     return render_template('list.html', questions=questions)
 
 
-@app.route('/question/<question_id>')
+@app.route('/question/<question_id>', methods=['GET', 'POST'])
 def display_a_question(question_id):
     if 'username' not in session:
         return redirect('/')
     question = data_manager.get_single_question(question_id)
     answers = data_manager.get_answers_for_questions(question_id)
+    answer_id = []
+    answercomments = []
+    for answer in answers:
+        answer_id.append(answer['id'])
+    for id in answer_id:
+        answercomments.append(data_manager.get_all_answer_comment(id))
+    comments = data_manager.get_all_comment(question_id)
     if request.method == 'GET':
-        answer_id = []
-        answercomments = []
-        for answer in answers:
-            answer_id.append(answer['id'])
-        for id in answer_id:
-            answercomments.append(data_manager.get_all_answer_comment(id))
-        comments = data_manager.get_all_comment(question_id)
-        return render_template('question.html', question_id=question_id, answer_id=answer_id, answers=answers,
+        return render_template('question.html', question_id=question_id, answers=answers,
                                question_message=question, comments=comments, answercomments=answercomments)
-    # elif request.method == 'POST':
-    #     single_answer_id = answers.id
-    #     user_id = data_manager.get_user_id_from_answer(single_answer_id)
-    #     reputation = data_manager.get_reputation()
+
+
+@app.route('/answer/<answer_id>', methods=['GET', 'POST'])
+def answer_for_acceptance(answer_id):
+    if 'username' not in session:
+        return redirect('/')
+    user_id = data_manager.get_user_id_from_answer(answer_id)
+    if request.method == 'POST':
+        data_manager.increase_reputation_on_accepting_answer(user_id)
+    return redirect('/')
 
 
 @app.route('/add-question', methods=['GET', 'POST'])

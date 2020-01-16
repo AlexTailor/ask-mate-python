@@ -29,7 +29,7 @@ def get_last_five_questions(cursor):
 @database_common.connection_handler
 def get_single_question(cursor, id_):
     cursor.execute('''
-                    SELECT message FROM question
+                    SELECT message, user_id FROM question
                     WHERE id =%(id_)s;
                     ''',
                    {'id_': id_})
@@ -72,18 +72,6 @@ def get_question_id(cursor, id_):
 
 
 @database_common.connection_handler
-def get_answer_id(cursor, id_):
-    cursor.execute('''
-                    SELECT id FROM answer
-                    WHERE question_id =%(id_)s;
-                    ''',
-                   {'id_': id_})
-    answer = cursor.fetchone()
-    if answer is not None:
-        return answer['id']
-
-
-@database_common.connection_handler
 def get_answer_id_from_comment(cursor, id_):
     cursor.execute('''
                     SELECT answer_id FROM comment
@@ -96,21 +84,9 @@ def get_answer_id_from_comment(cursor, id_):
 
 
 @database_common.connection_handler
-def get_answer_ids(cursor, id_):
-    cursor.execute('''
-                    SELECT id FROM answer
-                    WHERE question_id =%(id_)s;
-                    ''',
-                   {'id_': id_})
-    answer = cursor.fetchall()
-    if answer is not None:
-        return answer['id']
-
-
-@database_common.connection_handler
 def get_answers_for_questions(cursor, id_):
     cursor.execute('''
-        SELECT answer.message, answer.id, question_id FROM answer
+        SELECT answer.message, answer.id, question_id, answer.user_id FROM answer
         INNER JOIN question ON answer.question_id = question.id
         WHERE question_id = %(id_)s;
     ''',
@@ -307,8 +283,8 @@ def get_user_questions(cursor, id_):
     WHERE user_id = %(id_)s;
     ''',
                    {'id_': id_})
-    userquestions = cursor.fetchall()
-    return userquestions
+    user_questions = cursor.fetchall()
+    return user_questions
 
 
 @database_common.connection_handler
@@ -323,8 +299,8 @@ def get_user_answers(cursor, id_):
     ;
     ''',
                    {'id_': id_})
-    useranswers = cursor.fetchall()
-    return useranswers
+    user_answers = cursor.fetchall()
+    return user_answers
 
 
 @database_common.connection_handler
@@ -339,8 +315,8 @@ def get_user_comments(cursor, id_):
     ;
     ''',
                    {'id_': id_})
-    usercomments = cursor.fetchall()
-    return usercomments
+    user_comments = cursor.fetchall()
+    return user_comments
 
 
 @database_common.connection_handler
@@ -363,12 +339,22 @@ def get_all_users(cursor):
     return all_users
 
 
-# @database_common.connection_handler
-# def increase_reputation_on_accepting_answer(cursor, accepted_answer):
-#     cursor.execute('''
-#     INSERT INTO user_list (reputation)
-#     VALUES (reputation + accepted_answer);
-#     ''',
-#                    {'accepted_answer': accepted_answer})
-#     reputation = cursor.fetchall()
-#     return reputation
+@database_common.connection_handler
+def get_user_id_from_answer(cursor, id_):
+    cursor.execute(''' 
+        SELECT user_id FROM answer
+        WHERE id = %(id_)s;
+    ''',
+                   {'id_': id_})
+    user_id_ = cursor.fetchone()
+    return user_id_['user_id']
+
+
+@database_common.connection_handler
+def increase_reputation_on_accepting_answer(cursor, id_):
+    cursor.execute('''
+        UPDATE user_list
+        SET reputation = reputation + 15
+        WHERE id = %(id_)s;
+        ''',
+                   {'id_': id_})
